@@ -24,3 +24,15 @@
 
 " Allows enter to insert new line
 :nnoremap <CR> o<esc>
+
+:command -nargs=0 Header normal o/* Author: Alexandre BERNARD<enter>Company: Epita<enter>Functions used: None<enter>Purpose: 42<enter>Version: 1.0<enter>Modifications: None */<esc>
+
+:command -nargs=0 Noindent :execute 'set noautoindent' | :execute 'set nosmartindent' | :execute 'set nocindent'
+
+:command -nargs=0 Spaces :execute '1,$s/[ \t]*$//' 
+
+:function RemoveSp()
+: execute '1,$s/[ \t]*$//'
+:endfunction
+
+:autocmd VimLeavePre * call RemoveSp()
