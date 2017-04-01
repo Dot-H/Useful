@@ -29,7 +29,13 @@
 
 :command -nargs=0 Noindent :execute 'set noautoindent' | :execute 'set nosmartindent' | :execute 'set nocindent'
 
-:command -nargs=0 Indent :execute 'set autoindent' | :execute 'set smartindent' | :execute 'set cindent'
+:function Set_all_indents()
+: execute "set autoindent"
+: execute "set smartindent"
+: execute "set cindent"
+:endfunction
+
+:command -nargs=0 Indent call Set_all_indents()
 
 :function RemoveSp()
 : execute "1,$s/[ \t]*$//"
