@@ -12,7 +12,7 @@
 :set cindent
 
 :set background=dark
- 
+
 " Show line number
 :set number
 
@@ -25,16 +25,18 @@
 " Allows enter to insert new line
 :nnoremap <CR> o<esc>
 
-:command -nargs=0 Header normal o/* Author: Alexandre BERNARD<enter>Company: Epita<enter>Functions used: None<enter>Purpose: 42<enter>Version: 1.0<enter>Modifications: None */<esc>
+:command -nargs=0 Header :execute 'r ~/usefull/ressources/header'
 
 :command -nargs=0 Noindent :execute 'set noautoindent' | :execute 'set nosmartindent' | :execute 'set nocindent'
+
+:command -nargs=0 Indent :execute 'set autoindent' | :execute 'set smartindent' | :execute 'set cindent'
 
 :function RemoveSp()
 : execute "1,$s/[ \t]*$//"
 :endfunction
 
 " Remove the useless spaces at the end of a line
-:command -nargs=0 Spaces call RemoveSp() 
+:command -nargs=0 Spaces call RemoveSp()
 
 " Remove the useless spaces at the end of a line when we quit vim
 :autocmd QuitPre * call RemoveSp()

@@ -1,3 +1,4 @@
+
+
 Effacer les espaces en fin de lignes:
 :i1,$s/[ \t]*$//
-
