@@ -25,8 +25,10 @@
 " Allows enter to insert new line
 :nnoremap <CR> o<esc>
 
+" Put a function header
 :command -nargs=0 Header :execute 'r ~/usefull/ressources/header'
 
+" Disable the indents
 :command -nargs=0 Noindent :execute 'set noautoindent' | :execute 'set nosmartindent' | :execute 'set nocindent'
 
 :function Set_all_indents()
@@ -35,6 +37,7 @@
 : execute "set cindent"
 :endfunction
 
+" Able all the indents
 :command -nargs=0 Indent call Set_all_indents()
 
 :function RemoveSp()
@@ -46,3 +49,17 @@
 
 " Remove the useless spaces at the end of a line when we quit vim
 :autocmd QuitPre * call RemoveSp()
+
+function Header_h()
+" Get the file name and upper it
+: let @a = toupper(expand('%t'))
+: let @a = '#ifndef ' . @a . "\n" . '#define ' . @a . "\n\n\n" . '#endif'
+" Write the macros
+: normal "ap
+: normal gg0x
+" Replace dots by underscores
+: execute '%s/\./_/g'
+endfunction
+
+" Write the macros in new .h and .hh files
+:autocmd BufNewFile *.h,*.hh call Header_h()
