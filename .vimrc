@@ -40,8 +40,15 @@
 " Able all the indents
 :command -nargs=0 Indent call Set_all_indents()
 
+function Create_dot_h()
+: execute "!python ~/usefull/ressources/create_dot_h.py ".expand('%t')
+: let @a = "#include \"".expand('%t')."\"\n"
+: normal gg0"ap
+: normal ggj$hxih
+endfunction
+
 " Create a dot_h file
-:command -nargs=0 DotH :execute "!python ~/usefull/ressources/create_dot_h.py " . expand('%t')
+:command -nargs=0 DotH call Create_dot_h()
 
 :function RemoveSp()
 : execute "1,$s/[ \t]*$//"
@@ -59,7 +66,6 @@ function Header_h()
 : let @a = '#ifndef ' . @a . "\n" . '#define ' . @a . "\n\n\n" . '#endif'
 " Write the macros
 : normal "ap
-: normal gg0x
 " Replace dots by underscores
 : execute '%s/\./_/g'
 endfunction
