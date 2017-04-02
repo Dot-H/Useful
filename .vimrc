@@ -1,4 +1,4 @@
-" Globat settings
+" Global settings
 :set nocompatible
 :syntax on
 
@@ -16,14 +16,14 @@
 " Show line number
 :set number
 
-" Show when a line exceeds 80 chars
-:au BufWinEnter * let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
-
 " Allows space in normal mod
 :nnoremap <space> i<space><esc>
 
 " Allows enter to insert new line
 :nnoremap <CR> o<esc>
+
+" Save file with ctrl+s
+:inoremap <C-s> <Esc>:w<CR>a
 
 " Put a function header
 :command -nargs=0 Header :execute 'r ~/usefull/ressources/header'
@@ -39,6 +39,9 @@
 
 " Able all the indents
 :command -nargs=0 Indent call Set_all_indents()
+
+" Create a dot_h file
+:command -nargs=0 DotH :execute "!python ~/usefull/ressources/create_dot_h.py " . expand('%t')
 
 :function RemoveSp()
 : execute "1,$s/[ \t]*$//"
@@ -63,3 +66,6 @@ endfunction
 
 " Write the macros in new .h and .hh files
 :autocmd BufNewFile *.h,*.hh call Header_h()
+
+" Show when a line exceeds 80 chars
+:au BufWinEnter * let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
