@@ -122,5 +122,6 @@ alias screen='gnome-screenshot -i'
 alias gdb='gdb -q'
 alias wifi='wpa_supplicant -D wext -i wlp2s0 -c /etc/wpa_supplicant.conf &'
 alias burp='BurpSuiteFree/BurpSuiteFree'
+alias Makefile='if ! [ -f "Makefile" ]; then curPath=$PWD;cd; cd script; ./createMakefile.sh; mv Makefile $echo$curPath; cd $echo$curPath; else echo Already a Makefile; fi'
 
 stty -ixon # Stop the vim freezing after a ctrl-s
