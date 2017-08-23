@@ -123,4 +123,8 @@ alias gdb='gdb -q'
 alias wifi='wpa_supplicant -D wext -i wlp2s0 -c /etc/wpa_supplicant.conf &'
 alias burp='BurpSuiteFree/BurpSuiteFree'
 
+alias Makefile='if ! [ -f "Makefile" ]; then /home/fang/script/createMakefile.sh; sed -i "/SRC=/c\SRC=$(echo *.c )" Makefile; else echo Already a Makefile; fi'
+alias Check='/home/fang/script/checkRendu.sh'
+alias Clean='/home/fang/script/clean.sh'
+
 stty -ixon # Stop the vim freezing after a ctrl-s
