@@ -92,10 +92,12 @@ int main()
 
   toto = list_elt_at(sentinel, 6);
   printf("\nelt at 6: %s %s", toto->firstname, toto->lastname);
+  refcount_decr(&toto->rcount);
 
   toto = list_get_data(list_find(sentinel, find_by_firstname));
   printf("\nelt like firstname = \"tot8\": %s %s %u\n\n", toto->firstname,
          toto->lastname, toto->uid);
+  refcount_decr(&toto->rcount);
 
   list_print(sentinel);
 

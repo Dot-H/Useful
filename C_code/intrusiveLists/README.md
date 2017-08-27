@@ -6,8 +6,9 @@ present in the intrusiveLists.h file as "list_delete_data)".
 
 There are no function doing allocation and it's recommanded to use
 the functions from the library to free the memory, do not forget
-that the datas are manage by a reference counter. It could be a good
-idea to make a create_data function like the one in the example.c file.
+that the datas are manage by a reference counter so the reference counter
+is up to 2 when you get a data from the list without removing it. It could be
+a good idea to make a create_data function like the one in the example.c file.
 
 Every function from intrusiveLists.h (except list_init) must be called with
 an initiated list.

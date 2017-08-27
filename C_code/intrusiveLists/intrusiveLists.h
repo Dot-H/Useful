@@ -96,6 +96,7 @@ void list_delete(struct s_list *l);
 ** list_elt_at(l, i)
 ** get the elt at the index i
 ** return null if not found
+** /!\ Care, the refcount is incremented
 */
 struct s_data_l *list_elt_at(struct s_list *l, size_t i);
 
@@ -111,6 +112,7 @@ struct s_list *list_pop_at(struct s_list *l, size_t i);
 ** return the first occurence of the data verifying the predicate
 ** the predicate must return 0 if false and a positive value otherwise
 ** return null if not found
+** /!\ Care, the refcount is incremented
 */
 struct s_list *list_find(struct s_list *l, int (*predicate)(struct s_data_l *));
 

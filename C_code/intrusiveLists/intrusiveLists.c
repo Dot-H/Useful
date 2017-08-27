@@ -87,7 +87,7 @@ void list_print(struct s_list *l)
 {
   for (; l->next; l = l->next)
   {
-    struct s_data_l *d = CONTAINER_OF(struct s_data_l, list, l->next);
+    struct s_data_l *d = list_get_data(l->next);
     printf("%s %s -> ", d->firstname, d->lastname);
   }
 }
@@ -96,7 +96,7 @@ void list_delete(struct s_list *l)
 {
   while (!list_is_empty(l))
   {
-    struct s_data_l *d = CONTAINER_OF(struct s_data_l, list, list_pop_front(l));
+    struct s_data_l *d = list_get_data(list_pop_front(l));
     refcount_decr(&d->rcount);
   }
 
@@ -109,7 +109,12 @@ struct    s_data_l *list_elt_at(struct s_list *l, size_t i)
   for (; x < i && l->next; ++x, l = l->next)
     ;
 
-  return l->next ? list_get_data(l->next) : NULL;
+  if (!l->next)
+    return NULL;
+
+  struct s_data_l *d = list_get_data(l->next);
+  refcount_incr(&d->rcount);
+  return d;
 }
 
 struct s_list   *list_pop_at(struct s_list *l, size_t i)
@@ -135,5 +140,9 @@ struct s_list *list_find(struct s_list *l, int (*predicate) (struct s_data_l *))
   for (; l->next && !predicate(list_get_data(l->next)); l = l->next)
     ;
 
+  if (!l->next)
+    return NULL;
+
+  refcount_incr(&list_get_data(l->next)->rcount);
   return l->next;
 }

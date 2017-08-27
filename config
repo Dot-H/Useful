@@ -168,6 +168,14 @@ bar {
         tray_output primary
 }
 
+# volume control (Alt + F11 or Alt + F12)
+bindsym F11 exec "amixer set Master 5%-"
+bindsym F12 exec "amixer set Master 5%+"
+
+# brightness control (Alt + F4 or Alt + F5)
+bindsym F4 exec "xbacklight - 10"
+bindsym F5 exec "xbacklight + 10"
+
 #######################################################################
 # automatically start i3-config-wizard to offer the user to create a
 # keysym-based config which used their favorite modifier (alt or windows)
