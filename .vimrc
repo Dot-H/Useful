@@ -63,7 +63,7 @@ endfunction
 function Header_h()
 " Get the file name and upper it
 : let @a = toupper(expand('%t')) . '_'
-: let @a = '#ifndef ' . @a . "\n" . '#define ' . @a . "\n\n\n" . '#endif /* !'.@a.' */'
+: let @a = '#ifndef ' . @a . "\n" . '# define ' . @a . "\n\n\n" . '#endif /* !'.@a.' */'
 " Write the macros
 : normal "ap
 " Replace dots by underscores
