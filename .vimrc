@@ -73,5 +73,8 @@ endfunction
 " Write the macros in new .h and .hh files
 :autocmd BufNewFile *.h,*.hh call Header_h()
 
+" Remove the \t when opening *h, *c, *cpp, *hh
+:autocmd QuitPre *.h,*.hh,*.c,*.cpp :execute 'ret'
+
 " Show when a line exceeds 80 chars
 :au BufWinEnter * let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
