@@ -126,5 +126,5 @@ alias burp='BurpSuiteFree/BurpSuiteFree'
 alias Makefile='if ! [ -f "Makefile" ]; then /home/fang/script/createMakefile.sh; sed -i "/SRC=/c\SRC=$(echo *.c )" Makefile; else echo Already a Makefile; fi'
 alias Check='~/afs/Usefull/checkRendu.sh'
 alias Clean='~/afs/Usefull/clean.sh'
-
+alias rm = '~/afs/Usefull/trash.sh'
 stty -ixon # Stop the vim freezing after a ctrl-s
