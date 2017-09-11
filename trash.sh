@@ -2,12 +2,14 @@
 
 [  $# -eq 0 ] && exit 1
 
+
 [ $1 == 'trash' ] || [ $1 == 'trash/' ] && ([ -f ~/trash ] || [ -d ~/trash ]) && rm -rf ~/trash && exit 0
 
 [ ! -d ~/trash ] && mkdir ~/trash
 
 for param; do
   [ ${param:0:1} == '-' ] && continue
+  [ $param == '*' ] && mv * ~/trash && exit 0
 
   if [ ! -f ~/trash/$param ] && [ ! -d ~/trash/$param ]; then
     mv $param ~/trash
