@@ -9,7 +9,7 @@
 
 for param; do
   [ ${param:0:1} == '-' ] && continue
-  [ $param == '*' ] && mv * ~/trash && exit 0
+  [ $param == '*' ] && mv * ~/trash
 
   if [ ! -f ~/trash/$param ] && [ ! -d ~/trash/$param ]; then
     mv $param ~/trash
