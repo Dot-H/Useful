@@ -13,8 +13,8 @@ for param; do
   [ $param == '--' ] && [ $tiret -eq 0 ] && tiret=1 && continue
   [ $tiret -eq 1 ] && tiret=0 && mv -- $param ~/trash && continue
   [ ${param:0:1} == '-' ] && continue
-  [ $param == '*' ] && mv * ~/trash
-  if [ ! -f ~/trash/$param ] && [ ! -d ~/trash/$param ]; then
+  [ ${param:0:1} == '*' ] && mv $param ~/trash
+  if [ ! -e ~/trash/$param ]; then
     mv $param ~/trash
   else
     var=$(shuf -i 0-9999999 -n 1)
