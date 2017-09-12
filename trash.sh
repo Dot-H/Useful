@@ -17,8 +17,8 @@ for param; do
   if [ ! -e ~/trash/$param ]; then
     mv $param ~/trash
   else
-    var=$(shuf -i 0-9999999 -n 1)
-    mv $param $param$var
-    mv $param$var ~/trash
+    time=$(echo $(date +"%T"))
+    mv $param $param$time
+    mv $param$time ~/trash
   fi
 done
