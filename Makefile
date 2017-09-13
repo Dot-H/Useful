@@ -1,24 +1,22 @@
-# Generated only via createMakefile.sh - no modifications
-
 CPPFLAGS = -MMD
 CC ?= gcc
 CFLAGS = -Wall -Wextra -Werror -std=c99 -pedantic -g
 LDFLAGS =
 LDLIBS =
 
-SRC = intrusiveLists.c ref.c example.c
+SRC = test.c
 DEP = ${SRC:.c=.d}
 OBJ = ${SRC:.c=.o}
 
-all: intrusiveLists
+all: test
 
-intrusiveLists: ${OBJ}
+test: ${OBJ}
 
 .PHONY: clean
 clean:
 	${RM} ${OBJ}
 	${RM} ${DEP}
-	${RM} intrusiveLists
+	${RM} test
 	rm -f *.swp
 
 -include ${DEP}
