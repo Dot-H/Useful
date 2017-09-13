@@ -78,3 +78,20 @@ endfunction
 
 " Show when a line exceeds 80 chars
 :au BufWinEnter * let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
+
+function Shebang()
+: let @a = "#!/bin/sh"
+: normal "ap
+endfunction
+
+" Add Shebang when create .sh
+:au BufNewFile *.sh call Shebang()
+
+function C_test_file()
+: let @a = "#include <stdio.h>\n\n"
+: let @a = @a . "int main(int argc, char* argv[])\n{\n}"
+: normal "ap
+endfunction
+
+" Create a c test file
+:au BufNewFile test.c call C_test_file()
