@@ -10,7 +10,7 @@ rule='main'
 
 echo 'CPPFLAGS = -MMD' >> Makefile
 echo 'CC ?= gcc' >> Makefile
-echo 'CFLAGS ?= -Wall -Wextra -Werror -std=c99 -pedantic -g' >> Makefile
+echo 'CFLAGS += -Wall -Wextra -Werror -std=c99 -pedantic -g' >> Makefile
 echo 'LDFLAGS =' >> Makefile
 echo -e "LDLIBS =\n" >> Makefile
 #echo "SRC =" >> Makefile
