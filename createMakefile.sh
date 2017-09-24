@@ -5,28 +5,31 @@
 # minus his extension.
 
 [ -f Makefile ] && echo 'A Makefile already exists' >&2 && exit 1
+
 rule='main'
 [ $# -gt 0 ] && rule=$(echo "$1" | cut -d '.' -f 1)
 
-echo 'CPPFLAGS = -MMD' >> Makefile
+for arg in "$@"; do
+  if [ ! -f $arg ]; then
+    echo "$arg does not exits or is not a file" >&2
+    exit 1
+  fi
+done
+
 echo 'CC ?= gcc' >> Makefile
 echo 'CFLAGS += -Wall -Wextra -Werror -std=c99 -pedantic -g' >> Makefile
 echo 'LDFLAGS =' >> Makefile
 echo -e "LDLIBS =\n" >> Makefile
-#echo "SRC =" >> Makefile
+
+# Put the arguments in the source
 echo "SRC = $@" >> Makefile
-echo 'DEP = ${SRC:.c=.d}' >> Makefile
-#echo 'PRG = ${SRC:.c=}' >> Makefile
 echo -e "OBJ = \${SRC:.c=.o}\n" >> Makefile
-#echo 'all: ${PRG}' >> Makefile
+
+#add the first .c as executable name and default rule
 echo -e "all: $rule\n" >> Makefile
 echo -e "$rule: \${OBJ}\n" >> Makefile
+
 echo -e ".PHONY: clean" >> Makefile
 echo 'clean:' >> Makefile
-#echo '	${RM} ${PRG}' >> Makefile
 echo '	${RM} ${OBJ}' >> Makefile
-echo '	${RM} ${DEP}' >> Makefile
 echo '	${RM}'" $rule" >> Makefile
-echo -e '	rm -f *.swp'"\n" >> Makefile
-echo -e "-include \${DEP}" >> Makefile
-#echo '	clear' >> Makefile
