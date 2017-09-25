@@ -17,7 +17,7 @@ for arg in "$@"; do
 done
 
 echo 'CC ?= gcc' >> Makefile
-echo 'CFLAGS += -Wall -Wextra -Werror -std=c99 -pedantic -g' >> Makefile
+echo 'CFLAGS += -Wall -Wextra -Werror -std=c99 -pedantic' >> Makefile
 echo 'LDFLAGS =' >> Makefile
 echo -e "LDLIBS =\n" >> Makefile
 
@@ -29,7 +29,11 @@ echo -e "OBJ = \${SRC:.c=.o}\n" >> Makefile
 echo -e "all: $rule\n" >> Makefile
 echo -e "$rule: \${OBJ}\n" >> Makefile
 
-echo -e ".PHONY: clean" >> Makefile
+# creates a rule test to make the test and aplly the gdb flag
+echo -e "test: CFLAGS += -g3 -DTEST" >> Makefile
+echo -e "test: $rule\n" >> Makefile
+
+echo -e ".PHONY: clean test" >> Makefile
 echo 'clean:' >> Makefile
 echo '	${RM} ${OBJ}' >> Makefile
 echo '	${RM}'" $rule" >> Makefile
