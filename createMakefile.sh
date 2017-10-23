@@ -29,11 +29,11 @@ echo -e "OBJ = \${SRC:.c=.o}\n" >> Makefile
 echo -e "all: $rule\n" >> Makefile
 echo -e "$rule: \${OBJ}\n" >> Makefile
 
-# creates a rule test to make the test and aplly the gdb flag
-echo -e "test: CFLAGS += -g3 -DTEST" >> Makefile
-echo -e "test: $rule\n" >> Makefile
+# creates a rule check to make the check and aplly the gdb flag
+echo -e "check: CFLAGS += -g3 -DTEST" >> Makefile
+echo -e "check: $rule\n" >> Makefile
 
-echo -e ".PHONY: clean test" >> Makefile
+echo -e ".PHONY: clean check" >> Makefile
 echo 'clean:' >> Makefile
 echo '	${RM} ${OBJ}' >> Makefile
 echo '	${RM}'" $rule" >> Makefile
