@@ -10,15 +10,15 @@
 tiret=0
 
 for param; do
-  [ $param == '--' ] && [ $tiret -eq 0 ] && tiret=1 && continue
-  [ $tiret -eq 1 ] && tiret=0 && mv -- $param ~/trash && continue
+  [ ${param} == '--' ] && [ $tiret -eq 0 ] && tiret=1 && continue
+  [ ${tiret} -eq 1 ] && tiret=0 && mv -- ${param} ~/trash && continue
   [ ${param:0:1} == '-' ] && continue
-  [ ${param:0:1} == '*' ] && mv $param ~/trash
-  if [ ! -e ~/trash/$param ]; then
-    mv $param ~/trash
+  [ ${param:0:1} == '*' ] && mv ${param} ~/trash
+  if [ ! -e ~/trash/${param} ]; then
+    mv ${param} ~/trash
   else
     time=$(echo $(date +"%T"))
-    mv $param $param$time
-    mv $param$time ~/trash
+    mv ${param} ${param}${time}
+    mv ${param}${time} ~/trash
   fi
 done
