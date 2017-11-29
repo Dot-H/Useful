@@ -17,6 +17,7 @@ for param; do
   if [ ! -e ~/trash/${param} ]; then
     mv ${param} ~/trash
   else
+    [ -d ${param} ] && [ ${param: -1} == '/' ] && param=${param%?}
     time=$(echo $(date +"%T"))
     mv ${param} ${param}${time}
     mv ${param}${time} ~/trash
