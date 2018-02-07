@@ -1,10 +1,11 @@
 " Global settings
+:set mouse=
 :set nocompatible
 :syntax on
 
 :set hlsearch
-:set shiftwidth=2
-:set tabstop=2
+:set shiftwidth=4
+:set tabstop=4
 :set expandtab
 
 :set autoindent
@@ -62,7 +63,7 @@ endfunction
 
 function Header_h()
 " Get the file name and upper it
-: let @a = toupper(expand('%t')) . '_'
+: let @a = toupper(expand('%t'))
 : let @a = '#ifndef ' . @a . "\n" . '# define ' . @a . "\n\n\n" . '#endif /* !'.@a.' */'
 " Write the macros
 : normal "ap
@@ -70,14 +71,24 @@ function Header_h()
 : execute '%s/\./_/g'
 endfunction
 
-" Write the macros in new .h and .hh files
-:autocmd BufNewFile *.h,*.hh call Header_h()
+function Header_hh()
+" Get the file name and upper it
+: let @a = '#pragma once'
+" Write the macros
+: normal "ap
+endfunction
+
+" Write the macros in new .h files
+:autocmd BufNewFile *.h call Header_h()
+
+" Write the macros in new .hh files
+:autocmd BufNewFile *.hh call Header_hh()
 
 " Remove the \t when opening *h, *c, *cpp, *hh
-:autocmd QuitPre *.h,*.hh,*.c,*.cpp :execute 'ret'
+:autocmd QuitPre *.h,*.hh,*.c, *.cc, *.cpp :execute 'ret'
 
 " Show when a line exceeds 80 chars
-:au BufWinEnter * let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
+:au BufWinEnter *.* let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 function Shebang()
 : let @a = "#!/bin/sh"
@@ -95,3 +106,19 @@ endfunction
 
 " Create a c test file
 :au BufNewFile test.c call C_test_file()
+
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
+
+map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
+imap <C-K> <c-o>: /usr/share/clang/clang-format.py<cr>
+
+vnoremap <c-f> y<ESC>/<c-r>"<CR>
