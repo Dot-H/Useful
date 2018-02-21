@@ -157,4 +157,4 @@ bar {
         status_command i3status
 }
 
-exec --no-startup-id "feh --bg-scale ~/Desktop/wallpaper.jpg"
+exec --no-startup-id "feh --bg-scale ~/Usefull/ressources/wallpaper.jpg"
