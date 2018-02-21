@@ -3,7 +3,6 @@
 :set nocompatible
 :syntax on
 
-:set hlsearch
 :set shiftwidth=4
 :set tabstop=4
 :set expandtab
@@ -85,18 +84,19 @@ endfunction
 :autocmd BufNewFile *.hh call Header_hh()
 
 " Remove the \t when opening *h, *c, *cpp, *hh
-:autocmd QuitPre *.h,*.hh,*.c, *.cc, *.cpp :execute 'ret'
+" :autocmd QuitPre *.h,*.hh,*.c, *.cc, *.cpp :execute 'ret'
 
 " Show when a line exceeds 80 chars
 :au BufWinEnter *.* let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
-function Shebang()
-: let @a = "#!/bin/sh"
+function Shebang(interpreter)
+: let @a = "#!/bin/" . a:interpreter
 : normal "ap
 endfunction
 
-" Add Shebang when create .sh
-:au BufNewFile *.sh call Shebang()
+" Add Shebang when create script
+:au BufNewFile *.sh call Shebang("sh")
+:au BufNewFile *.cl call Shebang("clisp")
 
 function C_test_file()
 : let @a = "#include <stdio.h>\n\n"
