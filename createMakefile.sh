@@ -17,7 +17,7 @@ for arg in "$@"; do
 done
 
 echo 'CC ?= gcc' >> Makefile
-echo 'CFLAGS += -Wall -Wextra -Werror -std=c99 -pedantic' >> Makefile
+echo 'CFLAGS += -Wall -Wextra -std=c99 -pedantic' >> Makefile
 echo 'LDFLAGS =' >> Makefile
 echo -e "LDLIBS =\n" >> Makefile
 
