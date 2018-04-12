@@ -122,3 +122,33 @@ map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
 imap <C-K> <c-o>: /usr/share/clang/clang-format.py<cr>
 
 vnoremap <c-f> y<ESC>/<c-r>"<CR>
+
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors), 4])
+    endif
+endfunction
+
+execute pathogen#infect()
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+function Syntastic_add_header(name)
+: let path = expand('#a:name:p')
+: let g:syntastic_c_avrgcc_args = "-l". path
+: let g:syntastic_c_gcc_args = "-l". path
+endfunction
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_c_checkers = ['avrgcc', 'gcc']
+
+" git config --add vim.settings 'tabstop=4 expandtab'
+let git_settings = system("git config --get vim.settings")
+if strlen(git_settings)
+    exe "set" git_settings
+endif
