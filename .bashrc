@@ -2,6 +2,7 @@
 # ~/.bashrc
 #
 
+setxkbmap gb
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -17,7 +18,7 @@ RST="\[$(tput sgr0)\]"
 
 PS1="${USR}\u@\h ${PTH}\w ${RST}\$ "
 
-function termisize() {
+function termsize() {
     [ $# -eq 0 ] && echo "termsize SIZE" && return 1
 
     # defaults
