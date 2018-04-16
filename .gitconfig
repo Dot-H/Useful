@@ -1,0 +1,25 @@
+[user]
+	name = Alexandre Bernard
+	email = alexandre.bernard@lse.epita.fr
+
+[core]
+    editor = vim
+    whitespace = fix, -indent-with-non-tab, trailing-space
+
+[color]
+    ui = auto
+
+[pull]
+    default = rebase
+
+[diff]
+    renamelimit = 0
+    renames = copy
+
+[commit]
+    verbose = true
+
+[alias]
+    lo = log --graph --oneline
+    cm = commit -m
+    c  = commit
