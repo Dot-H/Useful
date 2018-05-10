@@ -13,8 +13,6 @@ setxkbmap gb
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
-export SHELL=/bin/sh
-export TERMINAL=xterm
 
 PTH="\[$(tput setaf 214)\]"
 USR="\[$(tput setaf 46)\]"
@@ -22,7 +20,7 @@ RST="\[$(tput sgr0)\]"
 
 PS1="${USR}\u@\h ${PTH}\w ${RST}\$ "
 
-function termsize() {
+termsize() {
     [ $# -eq 0 ] && echo "termsize SIZE" && return 1
 
     # defaults
