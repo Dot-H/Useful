@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
-xrdb -load .Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge .Xresources
 exec i3
