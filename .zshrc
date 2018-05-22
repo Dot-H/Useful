@@ -59,4 +59,5 @@ alias ropgadget='python /usr/src/ROPgadget/ROPgadget.py'
 alias verilator='~/verilator/bin/verilator'
 
 # Custom commands
-alias createMakefile='$HOME/Usefull/createMakefile.sh'
+alias cMakefile='$HOME/Usefull/cMakefile.sh'
+alias cppMakefile='$HOME/Usefull/cppMakefile.sh'

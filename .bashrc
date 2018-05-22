@@ -33,7 +33,8 @@ function termsize() {
 }
 
 alias gdb='gdb -q'
-alias createMakefile='$HOME/Usefull/createMakefile.sh'
+alias cMakefile='$HOME/Usefull/cMakefile.sh'
+alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
 alias l='ls'
 alias la='ls -a'
 alias ll='ls -l'
