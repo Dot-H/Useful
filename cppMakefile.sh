@@ -16,7 +16,8 @@ for arg in "$@"; do
   fi
 done
 
-echo 'CXX = gcc' >> Makefile
+echo 'CXX = g++' >> Makefile
+echo 'CC = g++' >> Makefile
 echo 'CPPFLAGS += -Wall -Wextra -std=c++17 -pedantic' >> Makefile
 echo 'LDFLAGS =' >> Makefile
 echo -e "LDLIBS =\n" >> Makefile
