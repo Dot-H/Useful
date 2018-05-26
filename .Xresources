@@ -10,12 +10,10 @@ URxvt*geometry:                75x40
 !URxvt*font: xft:Terminus:pixelsize=12:antialias=true:hinting=true
 URxvt*font: xft:Hack:pixelsize=14:antialias=true:hinting=true
 URxvt*boldFont: xft:Hack:bold:pixelsize=16:antialias=true:hinting=true
-URxvt*depth:                20
+URxvt*depth:                32
 URxvt*borderless: 0
 URxvt*scrollBar:            false
 URxvt*saveLines:  2000
-URxvt.transparent:      true
-URxvt*.shading: 10
 URxvt.letterSpace: 0.5
 URxvt.lineSpace: 0
 
@@ -42,7 +40,7 @@ URxvt.iso14755_52: false
 
 !urxvt color scheme:
 
-URxvt*background: #2B2B2B
+URxvt*background: rgba:0000/0000/0200/c800
 URxvt*foreground: #DEDEDE
 
 URxvt*colorUL: #86a2b0

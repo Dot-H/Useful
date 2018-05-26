@@ -12,6 +12,7 @@
 :set cindent
 
 :set background=dark
+:hi Normal ctermbg=16
 
 " Show line number
 :set number
