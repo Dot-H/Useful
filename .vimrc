@@ -105,8 +105,17 @@ function C_test_file()
 : normal "ap
 endfunction
 
+function Cpp_test_file()
+: let @a = "#include <iostream>\n\n"
+: let @a = @a . "int main(int argc, char* argv[])\n{\n}"
+: normal "ap
+endfunction
+
 " Create a c test file
 :au BufNewFile test.c call C_test_file()
+
+" Create a cpp test file
+:au BufNewFile test.cpp call Cpp_test_file()
 
 augroup Binary
   au!
