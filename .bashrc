@@ -40,6 +40,7 @@ function termsize() {
 }
 
 
+alias makej='make -j `nproc`'
 alias gdb='gdb -q'
 alias cMakefile='$HOME/Usefull/cMakefile.sh'
 alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
