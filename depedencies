@@ -1,5 +1,8 @@
+[Zsh]
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #OhMyZsh
+
 [Background mp4]
-shantz-xwinwrap-bzr
-mplayer
-youtube-dl
-compton
+* shantz-xwinwrap-bzr
+* mplayer
+* youtube-dl
+* compton
