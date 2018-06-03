@@ -34,7 +34,7 @@ aphrodite_get_current_branch() {
 	if [ -n "$branch" ]; then
 		echo -n $ZSH_THEME_GIT_PROMPT_PREFIX
 		echo -n $(parse_git_dirty)
-		echo -n " ‹${branch}›"
+		echo -n " <${branch}>"
 		echo -n $ZSH_THEME_GIT_PROMPT_SUFFIX
 	fi
 }
