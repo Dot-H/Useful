@@ -1,9 +1,12 @@
 [Vim]
+* pathogen
 * Syntastic
 * cscope
 
 [Zsh]
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #OhMyZsh
+* OhMyZsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+* trash-cli
 
 [Background mp4]
 * shantz-xwinwrap-bzr
