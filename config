@@ -161,3 +161,7 @@ exec compton
 exec ~/Usefull/mplayerBackground.sh ~/Desktop/background.mp4
 
 exec --no-startup-id "feh --bg-scale ~/Usefull/ressources/wallpaper.jpg"
+
+# Increment and decrement sound
+bindsym F2 exec --no-startup-id "amixer -c 1 -- set Master playback 5%-"
+bindsym F3 exec --no-startup-id "amixer -c 1 -- set Master playback 5%+"

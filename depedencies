@@ -7,6 +7,9 @@
 * rxvt-unicode
 * ttf-hack
 
+[Sound]
+* alsa-utils
+
 [Vim]
 * pathogen
 * Syntastic
