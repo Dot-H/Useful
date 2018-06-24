@@ -46,7 +46,11 @@ mkfs.vfat -F32 $BOOT_PARTITION
 cryptsetup -v luksFormat $LUKS_PARTITION
 cryptsetup luksOpen $LUKS_PARTITION luks
 
+<<<<<<< HEAD
 pvcreate /dev/mapper/luks # Create physical volume
+=======
+pvcreate /dev/mapper/luks # Create physical volume
+>>>>>>> install: add installation guide and update dependencies
 vgcreate vg0 /dev/mapper/luks
 lvcreate -L 70G vg0 -n swap
 lvcreate -L 150G vg0 -n root
@@ -91,11 +95,11 @@ nameserver 2606:4700:4700::1111,2606:4700:4700::1001
 
 nameserver 8.8.8.8' > /etc/resolv.conf
 
+passwd
 pacman -S dialog wpa_supplicant vim reflector openssh zsh
 
 passwd
 useradd -m -G wheel -s /usr/bin/zsh doth
-#TODO Uncomment sudo rights to wheels /etc/sudoers
 passwd doth
 
 # Select the 200 most recently synchronized HTTP or HTTPS mirrors, sort them
@@ -114,7 +118,6 @@ locale-gen
 
 mkinitcpio
 ----------
-
 bootctl --path=/boot install
 # edit /etc/mkinitcpio.conf
 # MODULES="ext4"
@@ -147,6 +150,7 @@ Service
 
 systemctl enable dhcpcd.service
 
+
 Yaourt
 ------
 
@@ -165,9 +169,11 @@ cd
 git clone https://github.com/Dot-H/Useful
 # /!\ Link dotfiles from Useful /!\
 
-Terminal
------
 
+Shell & Terminal
+----------------
+
+chsh -s /bin/zsh
 pacman -S rxvt-unicode
 
 
@@ -175,5 +181,13 @@ i3
 --
 
 pacman -S xorg xorg-xinit i3 dmenu
+git clone https://github.com/Dot-H/Usefull
+# /!\ Link dotfiles from Usefull /!\
+
+
+i3
+--
+
+pacman -S xorg xorg-xinit i3
 # link .xinitrc .zprofile .Xressources .zshrc
 startx
