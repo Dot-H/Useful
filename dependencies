@@ -10,6 +10,15 @@
 [Sound]
 * alsa-utils
 
+[i3]
+* i3
+* xorg xorg-xinit
+* dmenu
+
+[Uxrvt]
+* rxvt-unicode
+* ttf-hack
+
 [Vim]
 * pathogen
 * Syntastic
