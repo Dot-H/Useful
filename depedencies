@@ -1,3 +1,12 @@
+[i3]
+* i3
+* xorg xorg-xinit
+* dmenu
+
+[Uxrvt]
+* rxvt-unicode
+* ttf-hack
+
 [Vim]
 * pathogen
 * Syntastic
@@ -7,6 +16,8 @@
 * OhMyZsh
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 * trash-cli
+* zsh
+* sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #OhMyZsh
 
 [Background mp4]
 * shantz-xwinwrap-bzr
