@@ -46,7 +46,7 @@ mkfs.vfat -F32 $BOOT_PARTITION
 cryptsetup -v luksFormat $LUKS_PARTITION
 cryptsetup luksOpen $LUKS_PARTITION luks
 
-pvcreate /dev/mapper/luks # Create physical volume 
+pvcreate /dev/mapper/luks # Create physical volume
 vgcreate vg0 /dev/mapper/luks
 lvcreate -L 70G vg0 -n swap
 lvcreate -L 150G vg0 -n root
@@ -91,10 +91,11 @@ nameserver 2606:4700:4700::1111,2606:4700:4700::1001
 
 nameserver 8.8.8.8' > /etc/resolv.conf
 
-pacman -S dialog wpa_supplicant vim reflector openssh
+pacman -S dialog wpa_supplicant vim reflector openssh zsh
 
 passwd
-useradd -m -G wheel -s doth
+useradd -m -G wheel -s /usr/bin/zsh doth
+#TODO Uncomment sudo rights to wheels /etc/sudoers
 passwd doth
 
 # Select the 200 most recently synchronized HTTP or HTTPS mirrors, sort them
@@ -106,12 +107,14 @@ Locales
 -------
 
 echo LANG=en_GB.UTF-8 > /etc/locale.conf
+# Uncomment $LANG in /etc/locale.gen
 echo KEYMAP=uk > /etc/vconsole.conf
 locale-gen
 
 
 mkinitcpio
 ----------
+
 bootctl --path=/boot install
 # edit /etc/mkinitcpio.conf
 # MODULES="ext4"
@@ -144,11 +147,10 @@ Service
 
 systemctl enable dhcpcd.service
 
-
-
 Yaourt
 ------
 
+sudo pacman -S git
 cd /tmp
 git clone https://aur.archlinux.org/package-query.git
 cd package-query
@@ -157,25 +159,21 @@ cd ..
 git clone https://aur.archlinux.org/yaourt.git
 cd yaourt
 makepkg -si
-cd ..
+cd
 
 
-git clone https://github.com/Dot-H/Usefull
-# /!\ Link dotfiles from Usefull /!\
+git clone https://github.com/Dot-H/Useful
+# /!\ Link dotfiles from Useful /!\
 
-
-Shell & Terminal
+Terminal
 -----
 
-pacman -S zsh
-chsh -s /bin/zsh
 pacman -S rxvt-unicode
-
 
 
 i3
 --
 
-pacman -S xorg xorg-xinit i3
+pacman -S xorg xorg-xinit i3 dmenu
 # link .xinitrc .zprofile .Xressources .zshrc
 startx
