@@ -104,7 +104,9 @@ setxkbmap gb
 [[ $- != *i* ]] && return
 
 # Environment variables
-export LANG=en_GB.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 export EDITOR=vim
 export PGDATA="$HOME/postgres_data"
 
