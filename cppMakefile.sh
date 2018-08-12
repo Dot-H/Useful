@@ -16,8 +16,8 @@ for arg in "$@"; do
   fi
 done
 
-echo 'CXX = gcc' >> Makefile
-echo 'CPPFLAGS += -Wall -Wextra -std=c++17 -pedantic' >> Makefile
+echo 'CXX = g++' >> Makefile
+echo 'CXXFLAGS += -Wall -Wextra -std=c++17 -pedantic' >> Makefile
 echo 'LDFLAGS =' >> Makefile
 echo -e "LDLIBS =\n" >> Makefile
 
@@ -27,10 +27,11 @@ echo -e "OBJS = \${SRC:.cpp=.o}\n" >> Makefile
 
 #add the first .c as executable name and default rule
 echo -e "all: $rule\n" >> Makefile
-echo -e "$rule: \${OBJS}\n" >> Makefile
+echo -e "$rule: \${OBJS}" >> Makefile
+echo -e "\t\${CXX} \${CXXFLAGS} \$^ \${LDFLAGS} -o \$@\n" >> Makefile
 
 # creates a rule check to make the check and aplly the gdb flag
-echo -e "check: CPPFLAGS += -g3 -DTEST" >> Makefile
+echo -e "check: CXXFLAGS += -g3 -DTEST" >> Makefile
 echo -e "check: $rule\n" >> Makefile
 
 echo -e ".PHONY: clean check" >> Makefile
