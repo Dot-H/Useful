@@ -138,6 +138,9 @@ imap <C-K> <c-o>: /usr/share/clang/clang-format.py<cr>
 
 vnoremap <c-f> y<ESC>/<c-r>"<CR>
 
+" Turn on plugins in ~/.vim/after/ftplugin
+filetype plugin on
+
 " git config --add vim.settings 'tabstop=4 expandtab'
 let git_settings = system("git config --get vim.settings")
 if strlen(git_settings)
