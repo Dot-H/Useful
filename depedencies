@@ -11,6 +11,7 @@
 * pathogen
 * Syntastic
 * cscope
+* OmniCppComplete # http://vim.wikia.com/wiki/C%2B%2B_code_completion
 
 [Zsh]
 * OhMyZsh

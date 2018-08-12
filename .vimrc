@@ -15,6 +15,10 @@
 :set background=dark
 :hi Normal ctermbg=16
 
+" Enable plugins
+set nocp
+filetype plugin on
+
 " Show line number
 :set number
 
@@ -164,11 +168,34 @@ if strlen(git_settings)
     exe "set" git_settings
 endif
 
+" Cpp tags
+let ext = expand('%:e')
+if isdirectory($HOME."/.vim/tags") && (ext == 'cpp' || ext == 'cc'
+                                       \ || ext == 'hh' || ext == 'hpp'
+                                       \ || ext == 'hxx')
+    for ftag in split(glob('~/.vim/tags/*'), '\n')
+        let &tags = &tags.",".ftag
+    endfor
+    " Build tags of the current project with ctrl-F12
+    map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+    " OmniCppComplete
+    let OmniCpp_NamespaceSearch = 1
+    let OmniCpp_GlobalScopeSearch = 1
+    let OmniCpp_ShowAccess = 1
+    let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+    let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+    let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+    let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+    let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+    " automatically open and close the popup menu / preview window
+    au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+    set completeopt=menuone,menu,longest,preview
+endif
 
 " Cscope
 if has("cscope")
     " Use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-    set cscopetag 
+    set cscopetag
 
     " check cscope for definition of a symbol before checking ctags: set to 1
     " if you want the reverse search order.
@@ -212,4 +239,4 @@ if has("cscope")
     nmap <C-@><C-@>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
     nmap <C-@><C-@>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nmap <C-@><C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-endif 
+endif
