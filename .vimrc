@@ -12,7 +12,7 @@
 :set smartindent
 :set cindent
 
-:set background=dark
+highlight Normal ctermfg=white ctermbg=black
 :hi Normal ctermbg=16
 
 " Enable plugins
@@ -167,6 +167,9 @@ let git_settings = system("git config --get vim.settings")
 if strlen(git_settings)
     exe "set" git_settings
 endif
+
+" Vim theme
+colorscheme gruvbox
 
 " Cpp tags
 let ext = expand('%:e')

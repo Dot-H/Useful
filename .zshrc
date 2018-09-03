@@ -1,8 +1,12 @@
 # If you come from bash you might have to change your $PATH.
+#
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/doth/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
+
+# No rights to /usr/local/bin workaround
+export PATH="$PATH:$HOME/bin"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -97,9 +101,6 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 ############ Own ###########
 ############################
 
-# Ok it should not be here soz
-setxkbmap gb
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -129,7 +130,7 @@ termsize() {
 
 # Listing with colors
 alias tree='tree -C'
-alias ls='ls --color=auto'
+alias ls='ls -G'
 alias grep='grep --color=auto'
 
 # Forbid rm command
