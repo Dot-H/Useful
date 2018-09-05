@@ -93,7 +93,7 @@ endfunction
 " :autocmd QuitPre *.h,*.hh,*.c, *.cc, *.cpp :execute 'ret'
 
 " Show when a line exceeds 80 chars
-:au BufWinEnter *.* let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" :au BufWinEnter *.* let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
 function Shebang(interpreter)
 : let @a = "#!/bin/" . a:interpreter
