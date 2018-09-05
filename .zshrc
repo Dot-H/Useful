@@ -128,6 +128,21 @@ termsize() {
     printf '\033]713;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
 }
 
+# Creates a ramdisk named $1 and of size $2 MB
+mount_tmpfs() {
+    device=`hdiutil attach -nobrowse -nomount ram://$(($2*2048))`
+    # hdiutil returns some trailing characters in the output...
+    device=`echo $device | grep -o 'disk[123456789]*'`
+
+    Diskutil eraseDisk HFS+ "$1" "$device" && echo "Created volume $1"
+}
+
+
+# Umount absolute path $1 and detach its associated disk
+umount_tmpfs() {
+    hdiutil detach "$1"
+}
+
 # Listing with colors
 alias tree='tree -C'
 alias ls='ls -G'
@@ -140,6 +155,9 @@ alias rm="1>&2 echo 'plz use del in order to have use the trashcli interface'"
 # Silence gdb
 alias gdb='gdb -q'
 
+# Ctags
+alias ctags="`brew --prefix`/bin/ctags"
+
 # Typos solver
 alias l='ls'
 alias la='ls -a'
@@ -149,7 +167,7 @@ alias sl='ls'
 # Making life easier
 alias dcmake='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
-alias makej='make -j `nproc`'
+alias makej='make -j `sysctl -n hw.physicalcpu`'
 
 # From source commands
 alias rider='/home/doth/Rider/bin/rider.sh'
