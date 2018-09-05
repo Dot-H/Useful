@@ -1,6 +1,6 @@
 [user]
 	name = Alexandre Bernard
-	email = alexandre.bernard@lse.epita.fr
+	email = alexandre.bernard@epita.fr
 
 [core]
     editor = vim
@@ -22,5 +22,5 @@
 
 [alias]
     lo = log --graph --oneline
-    cm = commit -s -m
-    c  = commit -s
+    cm = commit -m
+    c  = commit
