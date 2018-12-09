@@ -149,12 +149,9 @@ alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
 alias makej='make -j `nproc`'
 
 # From source commands
-alias rider='/home/doth/Rider/bin/rider.sh'
-alias idea='/home/doth/Intellij/idea-IU-181.4203.550/bin/idea.sh'
-alias ida32='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/IDA\ 6.8/idaq.exe'
 alias ida64='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/IDA\ 6.8/idaq64.exe'
 alias ropgadget='python /usr/src/ROPgadget/ROPgadget.py'
-alias verilator='~/verilator/bin/verilator'
+alias vscode='/usr/src/vscode/code'
 
 # Custom commands
 alias cMakefile='$HOME/Usefull/cMakefile.sh'
