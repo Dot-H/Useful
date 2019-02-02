@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/doth/.oh-my-zsh
+export ZSH=/home/doth/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -103,6 +103,8 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 bindkey '^[[A' history-substring-search-up
 # Binds DOWN arrow key to search down
 bindkey '^[[B' history-substring-search-down
+# Set up Node version Manager
+source /usr/share/nvm/init-nvm.sh
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -113,6 +115,10 @@ export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=vim
 export PGDATA="$HOME/postgres_data"
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export FABRICPATH=$HOME/go/fabric-samples
+export PATH=$PATH:$FABRICPATH/bin
 
 # Double tab customization
 autoload -Uz compinit
@@ -163,7 +169,11 @@ alias sl='ls'
 alias dcmake='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
 alias makej='make -j `nproc`'
+<<<<<<< HEAD
 alias copy='xclip -sel clip'
+=======
+alias t=todo.sh
+>>>>>>> zshrc: add todo
 
 # From source commands
 alias ida64='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/IDA\ 6.8/idaq64.exe'
