@@ -115,10 +115,9 @@ export EDITOR=vim
 export PGDATA="$HOME/postgres_data"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export FABRICPATH=$HOME/go/src/fabric-samples
+export FABRICPATH=$HOME/go/fabric-samples
 export PATH=$PATH:$FABRICPATH/bin
 export PATH=~/.npm-global/bin:$PATH
-
 
 # Double tab customization
 autoload -Uz compinit
