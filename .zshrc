@@ -159,12 +159,6 @@ todo_fetch() {
     git -C $TODO_PATH pull --rebase
 }
 
-# NPM
-NPM_PACKAGES="${HOME}/.npm-packages"
-export PATH="$NPM_PACKAGES/bin:$PATH"
-unset MANPATH # delete if you already modified MANPATH elsewhere in your config
-export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
 # Listing with colors
 alias tree='tree -C'
 alias ls='ls --color=auto'
