@@ -105,7 +105,7 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 # Set up Node version Manager
-source /usr/share/nvm/init-nvm.sh
+# source /usr/share/nvm/init-nvm.sh
 
 # Ok it should not be here soz
 setxkbmap gb
@@ -139,6 +139,19 @@ termsize() {
     printf '\033]711;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
     printf '\033]712;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
     printf '\033]713;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
+}
+
+# Todo
+export TODO_PATH=$HOME/.todo
+
+todo_push() {
+    git -C $TODO_PATH add -A
+    git -C $TODO_PATH commit -m "update: $(date)"
+    git -C $TODO_PATH push
+}
+
+todo_fetch() {
+    git -C $TODO_PATH pull --rebase
 }
 
 # Listing with colors
