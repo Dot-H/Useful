@@ -63,6 +63,7 @@ plugins=(
   safe-paste
   colored-man-pages
   history-substring-search
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh

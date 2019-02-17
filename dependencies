@@ -14,11 +14,11 @@
 * OmniCppComplete # http://vim.wikia.com/wiki/C%2B%2B_code_completion
 
 [Zsh]
-* OhMyZsh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 * trash-cli
 * zsh
-* sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" #OhMyZsh
+* OhMyZsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+* zsh-autosuggestions: git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 [Background mp4]
 * shantz-xwinwrap-bzr
