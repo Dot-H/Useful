@@ -63,7 +63,6 @@ plugins=(
   safe-paste
   colored-man-pages
   history-substring-search
-  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -97,6 +96,13 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 ############################
 ############ Own ###########
 ############################
+
+# history-substring-search bindings
+# Key bindings have been found by doing `cat -v` before hitting search keys
+# Binds UP arrow key to search up
+bindkey '^[[A' history-substring-search-up
+# Binds DOWN arrow key to search down
+bindkey '^[[B' history-substring-search-down
 
 # Ok it should not be here soz
 setxkbmap gb
