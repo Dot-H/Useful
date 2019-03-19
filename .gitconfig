@@ -24,3 +24,4 @@
     lo = log --graph --oneline
     cm = commit -s -m
     c  = commit -s
+    subpull = submodule foreach 'git pull --rebase'
