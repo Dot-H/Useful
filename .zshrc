@@ -154,6 +154,12 @@ todo_fetch() {
     git -C $TODO_PATH pull --rebase
 }
 
+# NPM
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$NPM_PACKAGES/bin:$PATH"
+unset MANPATH # delete if you already modified MANPATH elsewhere in your config
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
 # Listing with colors
 alias tree='tree -C'
 alias ls='ls --color=auto'
@@ -189,3 +195,7 @@ alias verilator='~/verilator/bin/verilator'
 # Custom commands
 alias cMakefile='$HOME/Usefull/cMakefile.sh'
 alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
