@@ -130,6 +130,10 @@ compinit
 setopt COMPLETE_ALIASES
 zstyle ':completion:*' menu select
 
+# Kubectl completion
+which kubectl >/dev/null
+[ $? -eq 0 ] && source <(kubectl completion zsh)
+
 # Font size setter
 termsize() {
     [ $# -eq 0 ] && echo "termsize SIZE" && return 1
