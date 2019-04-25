@@ -188,7 +188,7 @@ alias sl='ls'
 alias dcmake='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
 alias makej='make -j `nproc`'
-alias t=todo.sh
+alias copy='xclip -sel clip'
 
 # From source commands
 alias rider='/home/doth/Rider/bin/rider.sh'
