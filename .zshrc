@@ -116,8 +116,10 @@ export LC_ALL=en_US.UTF-8
 export EDITOR=vim
 export PGDATA="$HOME/postgres_data"
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+
 export FABRICPATH=$HOME/go/fabric-samples
+
+export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$FABRICPATH/bin
 
 # Double tab customization
