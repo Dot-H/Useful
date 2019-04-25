@@ -184,11 +184,8 @@ alias sl='ls'
 alias dcmake='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
 alias makej='make -j `nproc`'
-<<<<<<< HEAD
 alias copy='xclip -sel clip'
-=======
 alias t=todo.sh
->>>>>>> zshrc: add todo
 
 # From source commands
 alias ida64='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/IDA\ 6.8/idaq64.exe'
