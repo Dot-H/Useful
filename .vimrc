@@ -144,7 +144,6 @@ function! SyntasticCheckHook(errors)
     endif
 endfunction
 
-execute pathogen#infect()
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
