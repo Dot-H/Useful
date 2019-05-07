@@ -193,5 +193,5 @@ alias ropgadget='python /usr/src/ROPgadget/ROPgadget.py'
 alias vscode='/usr/src/vscode/code'
 
 # Custom commands
-alias cMakefile='$HOME/Usefull/cMakefile.sh'
-alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
+alias cMakefile='$HOME/Useful/cMakefile.sh'
+alias cppMakefile='$HOME/Useful/cppMakefile.sh'
