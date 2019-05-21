@@ -104,9 +104,6 @@ bindkey '^[[A' history-substring-search-up
 # Binds DOWN arrow key to search down
 bindkey '^[[B' history-substring-search-down
 
-# Ok it should not be here soz
-setxkbmap gb
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -122,6 +119,16 @@ autoload -Uz compinit
 compinit
 setopt COMPLETE_ALIASES
 zstyle ':completion:*' menu select
+
+# Kubectl completion
+## Allows lazy loading to avoid spending too much time starting a shell
+function kubectl() {
+    if ! type __start_kubectl >/dev/null 2>&1; then
+        source <(command kubectl completion zsh)
+    fi
+
+    command kubectl "$@"
+}
 
 # Font size setter
 termsize() {
