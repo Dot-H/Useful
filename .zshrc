@@ -104,12 +104,6 @@ bindkey '^[[A' history-substring-search-up
 # Binds DOWN arrow key to search down
 bindkey '^[[B' history-substring-search-down
 
-# Set up Node version Manager
-# source /usr/share/nvm/init-nvm.sh
-
-# Ok it should not be here soz
-setxkbmap gb
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -133,8 +127,14 @@ setopt COMPLETE_ALIASES
 zstyle ':completion:*' menu select
 
 # Kubectl completion
-which kubectl >/dev/null
-[ $? -eq 0 ] && source <(kubectl completion zsh)
+## Allows lazy loading to avoid spending too much time starting a shell
+function kubectl() {
+    if ! type __start_kubectl >/dev/null 2>&1; then
+        source <(command kubectl completion zsh)
+    fi
+
+    command kubectl "$@"
+}
 
 # Font size setter
 termsize() {
