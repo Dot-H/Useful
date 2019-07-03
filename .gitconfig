@@ -16,6 +16,7 @@
 [diff]
     renamelimit = 0
     renames = copy
+	submodule = log
 
 [commit]
     verbose = true
@@ -25,3 +26,5 @@
     cm = commit -s -m
     c  = commit -s
     subpull = submodule foreach 'git pull --rebase'
+[push]
+	recurseSubmodules = check
