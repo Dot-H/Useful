@@ -59,3 +59,7 @@ alias ida64='wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida64.exe'
 alias ropgadget='python /usr/src/ROPgadget/ROPgadget.py'
 alias verilator='~/verilator/bin/verilator'
 export PGDATA="$HOME/postgres_data"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
