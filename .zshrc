@@ -115,9 +115,10 @@ export EDITOR=vim
 export PGDATA="$HOME/postgres_data"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export FABRICPATH=$HOME/go/fabric-samples
-export PATH=$PATH:$FABRICPATH/bin
 export PATH=~/.npm-global/bin:$PATH
+
+# Add go PATH
+export PATH=$PATH:/usr/local/go/bin
 
 # Double tab customization
 autoload -Uz compinit
@@ -127,9 +128,11 @@ zstyle ':completion:*' menu select
 
 # Kubectl completion
 ## Allows lazy loading to avoid spending too much time starting a shell
-function kubectl() {
+function k() {
     if ! type __start_kubectl >/dev/null 2>&1; then
         source <(command kubectl completion zsh)
+        # Autocomplete for the alias
+        source <(command kubectl completion zsh | sed s/kubectl/k/g)
     fi
 
     command kubectl "$@"
@@ -194,7 +197,7 @@ alias verilator='~/verilator/bin/verilator'
 # Custom commands
 alias cMakefile='$HOME/Usefull/cMakefile.sh'
 alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
+alias gimp='flatpak run org.gimp.GIMP//stable'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
