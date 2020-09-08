@@ -165,3 +165,7 @@ exec --no-startup-id "feh --bg-scale ~/Usefull/ressources/wallpaper.jpg"
 # Personal
 bindsym $mod+m exec "/home/doth/Useful/pad.sh up"
 bindsym $mod+Shift+m exec "/home/doth/Useful/pad.sh down"
+
+# move focused workspace between monitors
+bindsym $mod+Ctrl+greater move workspace to output right
+bindsym $mod+Ctrl+less move workspace to output left
