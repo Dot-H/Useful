@@ -11,7 +11,7 @@
     ui = auto
 
 [pull]
-    default = rebase
+    rebase = true
 
 [diff]
     renamelimit = 0
@@ -26,5 +26,11 @@
     cm = commit -s -m
     c  = commit -s
     subpull = submodule foreach 'git pull --rebase'
+	pushf = push --force-with-lease
 [push]
 	recurseSubmodules = check
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[url "git@github.com:"]
+	insteadOf = https://github.com/
