@@ -185,6 +185,7 @@ alias dcmake='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
 alias makej='make -j `nproc`'
 alias copy='xclip -sel clip'
+alias install='sudo apt-get install'
 
 # From source commands
 alias rider='/home/doth/Rider/bin/rider.sh'
