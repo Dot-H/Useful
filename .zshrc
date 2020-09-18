@@ -138,6 +138,17 @@ function k() {
     command kubectl "$@"
 }
 
+# Github completion
+## Allows lazy loading to avoid spending too much time starting a shell
+function gh() {
+    if ! type _gh >/dev/null 2>&1; then
+        source <(command gh completion -s zsh)
+        compdef _gh gh
+    fi
+
+    command gh "$@"
+}
+
 # Font size setter
 termsize() {
     [ $# -eq 0 ] && echo "termsize SIZE" && return 1
