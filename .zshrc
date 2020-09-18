@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/doth/.oh-my-zsh
+export ZSH=/home/doth/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -113,6 +113,12 @@ export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR=vim
 export PGDATA="$HOME/postgres_data"
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export PATH=~/.npm-global/bin:$PATH
+
+# Add go PATH
+export PATH=$PATH:/usr/local/go/bin
 
 # Double tab customization
 autoload -Uz compinit
@@ -122,12 +128,25 @@ zstyle ':completion:*' menu select
 
 # Kubectl completion
 ## Allows lazy loading to avoid spending too much time starting a shell
-function kubectl() {
+function k() {
     if ! type __start_kubectl >/dev/null 2>&1; then
         source <(command kubectl completion zsh)
+        # Autocomplete for the alias
+        source <(command kubectl completion zsh | sed s/kubectl/k/g)
     fi
 
     command kubectl "$@"
+}
+
+# Github completion
+## Allows lazy loading to avoid spending too much time starting a shell
+function gh() {
+    if ! type _gh >/dev/null 2>&1; then
+        source <(command gh completion -s zsh)
+        compdef _gh gh
+    fi
+
+    command gh "$@"
 }
 
 # Font size setter
@@ -139,6 +158,19 @@ termsize() {
     printf '\033]711;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
     printf '\033]712;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
     printf '\033]713;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
+}
+
+# Todo
+export TODO_PATH=$HOME/.todo
+
+todo_push() {
+    git -C $TODO_PATH add -A
+    git -C $TODO_PATH commit -m "update: $(date)"
+    git -C $TODO_PATH push
+}
+
+todo_fetch() {
+    git -C $TODO_PATH pull --rebase
 }
 
 # Listing with colors
@@ -164,6 +196,7 @@ alias dcmake='cmake -DCMAKE_BUILD_TYPE=Debug'
 alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
 alias makej='make -j `nproc`'
 alias copy='xclip -sel clip'
+alias install='sudo apt-get install'
 
 # From source commands
 alias rider='/home/doth/Rider/bin/rider.sh'
@@ -176,3 +209,7 @@ alias verilator='~/verilator/bin/verilator'
 # Custom commands
 alias cMakefile='$HOME/Usefull/cMakefile.sh'
 alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
+alias gimp='flatpak run org.gimp.GIMP//stable'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

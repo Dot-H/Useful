@@ -2,19 +2,26 @@
 # ~/.bashrc
 #
 
-export SHELL=/bin/bash
-export TERMINAL=urxvt
-export EDITOR=vim
+function ofiles () {
+    [ $# -ne 2 ] && echo "Usage: ofiles PATTERN" 1&>2 && exit 1
+    files=$(find -name "$1")
+    open=""
+    for file in $files; do
+        [ -f $file ] && open="${open} $file"
+    done
+    [ $open = "" ] && echo "no headers" 1&>2 && exit 1
+    vim -p $open
+}
 
 setxkbmap gb
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
-alias grep='grep --color=auto'
 
 export SHELL=/bin/sh
 export TERMINAL=xterm
+export EDITOR=vim
 
 PTH="\[$(tput setaf 214)\]"
 USR="\[$(tput setaf 46)\]"
@@ -32,6 +39,8 @@ function termsize() {
     printf '\033]713;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
 }
 
+
+alias makej='make -j `nproc`'
 alias gdb='gdb -q'
 alias cMakefile='$HOME/Usefull/cMakefile.sh'
 alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
@@ -39,11 +48,18 @@ alias l='ls'
 alias la='ls -a'
 alias ll='ls -l'
 alias sl='ls'
-alias rider='/home/doth/Rider/bin/rider.sh'
-alias idea='/home/doth/Intellij/idea-IU-181.4203.550/bin/idea.sh'
+alias rider='/usr/bin/Rider-2017.2/bin/rider.sh'
+alias idea='/usr/bin/idea-IU-181.4203.550/bin/idea.sh'
 alias dcmake='cmake -DCMAKE_BUILD_TYPE=Debug'
-alias ida32='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/IDA\ 6.8/idaq.exe'
-alias ida64='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/IDA\ 6.8/idaq64.exe'
+alias rcmake='cmake -DCMAKE_BUILD_TYPE=Release'
+alias headers='ofiles "*.h"'
+alias srcs='ofiles "*.c"'
+alias ida32='wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida.exe'
+alias ida64='wine ~/.wine/drive_c/Program\ Files/IDA\ 7.0/ida64.exe'
 alias ropgadget='python /usr/src/ROPgadget/ROPgadget.py'
 alias verilator='~/verilator/bin/verilator'
 export PGDATA="$HOME/postgres_data"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

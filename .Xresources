@@ -8,8 +8,8 @@ URxvt*geometry:                75x40
 !URxvt*boldFont: xft:Inconsolata:bold:pixelsize=17:antialias=true:hinting=true
 !URxvt*boldFont: xft:Terminus:bold:pixelsize=14:antialias=true:hinting=true
 !URxvt*font: xft:Terminus:pixelsize=12:antialias=true:hinting=true
-URxvt*font: xft:Hack:pixelsize=14:antialias=true:hinting=true
-URxvt*boldFont: xft:Hack:bold:pixelsize=16:antialias=true:hinting=true
+URxvt*font: xft:Hack:pixelsize=15:antialias=true:hinting=true
+URxvt*boldFont: xft:Hack:bold:pixelsize=18:antialias=true:hinting=true
 URxvt*depth:                32
 URxvt*borderless: 0
 URxvt*scrollBar:            false

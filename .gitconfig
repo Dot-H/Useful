@@ -1,5 +1,5 @@
 [user]
-	name = Alexandre Bernard
+	name = Dot-H
 	email = alexandre.bernard@epita.fr
 
 [core]
@@ -11,11 +11,12 @@
     ui = auto
 
 [pull]
-    default = rebase
+    rebase = true
 
 [diff]
     renamelimit = 0
     renames = copy
+	submodule = log
 
 [commit]
     verbose = true
@@ -24,3 +25,12 @@
     lo = log --graph --oneline
     cm = commit -s -m
     c  = commit -s
+    subpull = submodule foreach 'git pull --rebase'
+	pushf = push --force-with-lease
+[push]
+	recurseSubmodules = check
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[url "git@github.com:"]
+	insteadOf = https://github.com/
