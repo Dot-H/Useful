@@ -23,8 +23,9 @@
 
 [alias]
     lo = log --graph --oneline
-    cm = commit -s -m
     c  = commit -s
+    cm = commit -s -m
+    cane = commit -s --no-edit --amend
     subpull = submodule foreach 'git pull --rebase'
 	pushf = push --force-with-lease
 [push]
