@@ -2,6 +2,7 @@
 * i3
 * xorg xorg-xinit
 * dmenu
+* xbacklight
 
 [Uxrvt]
 * rxvt-unicode
