@@ -7,3 +7,5 @@ export PATH=~/.npm-global/bin:$PATH
 if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
     exec startx
 fi
+# Add .NET Core SDK tools
+export PATH="$PATH:/Users/alexandrebernard/.dotnet/tools"

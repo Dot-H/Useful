@@ -1,26 +1,11 @@
 [user]
-	name = Dot-H
+	name = Alexandre Bernard
 	email = alexandre.bernard@epita.fr
-
-[core]
-    editor = vim
-    whitespace = fix, -indent-with-non-tab, trailing-space
-	excludesfile = ~/.gitignore
-
-[color]
-    ui = auto
-
-[pull]
-    rebase = true
-
-[diff]
-    renamelimit = 0
-    renames = copy
-	submodule = log
-
-[commit]
-    verbose = true
-
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
 [alias]
     lo = log --graph --oneline
     c  = commit -s
@@ -28,10 +13,5 @@
     cane = commit -s --no-edit --amend
     subpull = submodule foreach 'git pull --rebase'
 	pushf = push --force-with-lease
-[push]
-	recurseSubmodules = check
+	pushu = push --set-upstream origin HEAD
 
-[url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
-[url "git@github.com:"]
-	insteadOf = https://github.com/

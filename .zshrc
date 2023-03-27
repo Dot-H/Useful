@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/doth/.oh-my-zsh
+export ZSH=/Users/alexandrebernard/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -179,8 +179,8 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 # Forbid rm command
-alias del='trash-put'
-alias rm="1>&2 echo 'plz use del in order to have use the trashcli interface'"
+#alias del='trash-put'
+#alias rm="1>&2 echo 'plz use del in order to have use the trashcli interface'"
 
 # Silence gdb
 alias gdb='gdb -q'
@@ -213,3 +213,33 @@ alias gimp='flatpak run org.gimp.GIMP//stable'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Pigment
+## Backend only (front will be launched locally)
+## NOTE: you can use Google Cloud Storage instead of your local disk to store
+## uploaded files & Avro file by removing the
+## "-f docker-compose.local-cloud-storage.override.yml" bit.
+alias stack="docker-compose -f docker-compose.yml -f docker-compose.watch.yml -f docker-compose.override.yml -f docker-compose.override.unix.yml -f docker-compose.local-cloud-storage.override.yml"
+
+alias stack-infra="$(git rev-parse --show-toplevel)/apps/setup_local_dev/compose.sh"
+
+alias stack-back-logs="stack logs -f computeservice pigment.importservice pigment.importworker registryservice usermanagementservice workspaceservice"
+alias stack-migrate-logs="stack logs -f migrateimportservice migrateusermanagementservice migrateworkspaceservice"
+
+## Launch the Frontend as well, in watch mode (front is launched in a container,
+## note that you'll still probably need to install node and run npm ci locally if
+## you want to have a working code-completion in your IDE/code-editor).
+alias stack="docker-compose -f docker-compose.yml -f docker-compose.watch.yml -f docker-compose.override.yml -f docker-compose.override.unix.yml -f docker-compose.front.yml -f docker-compose.front.watch.yml -f docker-compose.local-cloud-storage.override.yml"
+alias stack-front-logs="stack logs -f front"
+##  Rebuilding the front (when new dependencies/devdependencies are added)
+##  stack up -d --build front
+
+# Path setup
+export PATH=/usr/local/share/python:$PATH
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/alexandrebernard/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
