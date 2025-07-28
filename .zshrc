@@ -63,6 +63,7 @@ plugins=(
   safe-paste
   colored-man-pages
   history-substring-search
+  docker
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -116,6 +117,7 @@ export PGDATA="$HOME/postgres_data"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=~/.npm-global/bin:$PATH
+export PATH=:~/pigment_code/opensource/monorepo/bin:$PATH
 
 # Add go PATH
 export PATH=$PATH:/usr/local/go/bin
@@ -214,17 +216,21 @@ alias gimp='flatpak run org.gimp.GIMP//stable'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
+export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
+
 # Pigment
 ## Backend only (front will be launched locally)
 ## NOTE: you can use Google Cloud Storage instead of your local disk to store
 ## uploaded files & Avro file by removing the
 ## "-f docker-compose.local-cloud-storage.override.yml" bit.
-alias stack="docker-compose -f docker-compose.yml -f docker-compose.watch.yml -f docker-compose.override.yml -f docker-compose.override.unix.yml -f docker-compose.local-cloud-storage.override.yml"
+if git status > /dev/null; then
+    alias stack="docker-compose -f docker-compose.yml -f docker-compose.watch.yml -f docker-compose.override.yml -f docker-compose.override.unix.yml -f docker-compose.local-cloud-storage.override.yml"
 
-alias stack-infra="$(git rev-parse --show-toplevel)/apps/setup_local_dev/compose.sh"
+    alias stack-infra="$(git rev-parse --show-toplevel)/apps/setup_local_dev/compose.sh"
 
-alias stack-back-logs="stack logs -f computeservice pigment.importservice pigment.importworker registryservice usermanagementservice workspaceservice"
-alias stack-migrate-logs="stack logs -f migrateimportservice migrateusermanagementservice migrateworkspaceservice"
+    alias stack-back-logs="stack logs -f computeservice pigment.importservice pigment.importworker registryservice usermanagementservice workspaceservice"
+    alias stack-migrate-logs="stack logs -f migrateimportservice migrateusermanagementservice migrateworkspaceservice"
+fi
 
 ## Launch the Frontend as well, in watch mode (front is launched in a container,
 ## note that you'll still probably need to install node and run npm ci locally if
@@ -243,3 +249,15 @@ if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/path.zsh.inc' ]; the
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+function loginAs() {
+    local userEmail="$1"
+    local port="${2:-8000}"
+
+	password="B7f9HGSXsD@2f6iC8f!"
+	token=`curl -X POST -H "Content-Type: application/json" -d "{\"UserEmail\": \"$userEmail\", \"UserPassword\": \"$password\" }" "http://localhost:8000/api/users/Login/PasswordCheck" 2> /dev/null`
+	url="http://localhost:$port/login-with-token?token=$token"
+	open "$url"
+}
+
+source <(toner completion zsh)
