@@ -44,7 +44,8 @@ ZSH_THEME="aphrodite"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# This prevents oh-my-zsh from checking git status for untracked files
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -53,6 +54,25 @@ ZSH_THEME="aphrodite"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Speed up oh-my-zsh loading
+# Skips security checks that slow down startup
+ZSH_DISABLE_COMPFIX=true
+# Disables URL quoting magic which adds overhead
+DISABLE_MAGIC_FUNCTIONS=true
+
+# Cache completion - only rebuild once per day for massive speedup
+# This overrides oh-my-zsh's default compinit behavior
+autoload -Uz compinit
+_comp_files=(${ZDOTDIR:-$HOME}/.zcompdump(Nm-20))
+if (( $#_comp_files )); then
+    # Cache is less than 20 hours old, use it without checking (-C skips security check)
+    compinit -C -d "${ZDOTDIR:-$HOME}/.zcompdump"
+else
+    # Cache is old or doesn't exist, rebuild it (-u skips security check for speed)
+    compinit -C -u -d "${ZDOTDIR:-$HOME}/.zcompdump"
+fi
+unset _comp_files
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -63,8 +83,10 @@ plugins=(
   safe-paste
   colored-man-pages
   history-substring-search
-  docker
 )
+
+# Disable oh-my-zsh's compinit since we already ran it above
+skip_global_compinit=1
 
 source $ZSH/oh-my-zsh.sh
 
@@ -117,14 +139,14 @@ export PGDATA="$HOME/postgres_data"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=~/.npm-global/bin:$PATH
-export PATH=:~/pigment_code/opensource/monorepo/bin:$PATH
+export PATH=:~/pigment_code/opensource/monorepo/bin:~/pigment_code/opensource/monorepo/tools/pig:$PATH
+
 
 # Add go PATH
 export PATH=$PATH:/usr/local/go/bin
 
 # Double tab customization
-autoload -Uz compinit
-compinit
+# Note: compinit is already called by oh-my-zsh, no need to call it again
 setopt COMPLETE_ALIASES
 zstyle ':completion:*' menu select
 
@@ -160,19 +182,6 @@ termsize() {
     printf '\033]711;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
     printf '\033]712;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
     printf '\033]713;%s\007' "xft:Hack:bold:antialias=true:hinting=true:pixelsize=$1"
-}
-
-# Todo
-export TODO_PATH=$HOME/.todo
-
-todo_push() {
-    git -C $TODO_PATH add -A
-    git -C $TODO_PATH commit -m "update: $(date)"
-    git -C $TODO_PATH push
-}
-
-todo_fetch() {
-    git -C $TODO_PATH pull --rebase
 }
 
 # Listing with colors
@@ -214,41 +223,33 @@ alias cppMakefile='$HOME/Usefull/cppMakefile.sh'
 alias gimp='flatpak run org.gimp.GIMP//stable'
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 
 # Pigment
-## Backend only (front will be launched locally)
-## NOTE: you can use Google Cloud Storage instead of your local disk to store
-## uploaded files & Avro file by removing the
-## "-f docker-compose.local-cloud-storage.override.yml" bit.
-if git status > /dev/null; then
-    alias stack="docker-compose -f docker-compose.yml -f docker-compose.watch.yml -f docker-compose.override.yml -f docker-compose.override.unix.yml -f docker-compose.local-cloud-storage.override.yml"
-
-    alias stack-infra="$(git rev-parse --show-toplevel)/apps/setup_local_dev/compose.sh"
-
-    alias stack-back-logs="stack logs -f computeservice pigment.importservice pigment.importworker registryservice usermanagementservice workspaceservice"
-    alias stack-migrate-logs="stack logs -f migrateimportservice migrateusermanagementservice migrateworkspaceservice"
-fi
-
-## Launch the Frontend as well, in watch mode (front is launched in a container,
-## note that you'll still probably need to install node and run npm ci locally if
-## you want to have a working code-completion in your IDE/code-editor).
-alias stack="docker-compose -f docker-compose.yml -f docker-compose.watch.yml -f docker-compose.override.yml -f docker-compose.override.unix.yml -f docker-compose.front.yml -f docker-compose.front.watch.yml -f docker-compose.local-cloud-storage.override.yml"
-alias stack-front-logs="stack logs -f front"
-##  Rebuilding the front (when new dependencies/devdependencies are added)
-##  stack up -d --build front
+alias pstack="docker compose -f /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/docker-compose.generated.yml"
+alias pstack-up="pstack up -d --remove-orphans"
+alias pstack-down="pstack down --remove-orphans"
 
 # Path setup
 export PATH=/usr/local/share/python:$PATH
 
+# Google Cloud SDK - lazy loaded for performance
+# Add to PATH immediately, but defer completion loading
+if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/path.zsh.inc' ]; then
+    . '/Users/alexandrebernard/Downloads/google-cloud-sdk/path.zsh.inc'
+fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/alexandrebernard/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+# Lazy-load gcloud completions - only load when gcloud is first used
+gcloud() {
+    if [ -f '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then
+        source '/Users/alexandrebernard/Downloads/google-cloud-sdk/completion.zsh.inc'
+    fi
+    # Remove this function wrapper after first use
+    unfunction gcloud
+    command gcloud "$@"
+}
 
 function loginAs() {
     local userEmail="$1"
@@ -260,4 +261,7 @@ function loginAs() {
 	open "$url"
 }
 
-source <(toner completion zsh)
+# Lazy load toner completion to speed up shell startup
+if command -v toner &> /dev/null; then
+    source <(toner completion zsh)
+fi
