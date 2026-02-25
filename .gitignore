@@ -8,3 +8,4 @@ yarn.lock
 package-lock.json
 apps/Front/packages/app-pigment/.vscode
 .cursor/
+.claude/
