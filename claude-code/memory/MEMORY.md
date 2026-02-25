@@ -1,0 +1,29 @@
+# Memory
+
+## Git Worktrees
+- Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
+- If a worktree commit creates a "root-commit" with all files, use `git fetch origin <branch>` + `git reset --hard origin/<branch>` to recover.
+- `git push -u origin <branch>` fails in worktrees; use `git push origin HEAD:<branch>` instead.
+
+## Feature Flags
+- Scheduling team's FF range: 50000-50025 used, next available from 50026.
+- FFs defined in `apps/Common/Pigment.Api/FeatureFlags/FeatureFlags.proto`.
+- Pattern: `FeatureFlag_Name = ID [(flagMetadata) = {services: "service_name", defaultStatus: FeatureFlagStatus_Disabled}];`
+- Access via `IFeatureFlagLookup.IsFlagEnabled(FeatureFlag.Name)` or `IFeatureFlagService.IsFlagEnabled(FeatureFlag.Name, orgId)`.
+- `ViewContext.FeatureFlags` is `IFeatureFlagLookup`, `ExecutionContext.FeatureFlagLookup` is also `IFeatureFlagLookup`.
+
+## IMP Execution Options Pattern
+- Options flow: FormulaOptions -> FormulaExecutor.ToImpExecutionOptions -> ImpExecutionOptions proto -> SubContext
+- `ToImpExecutionOptions` receives `IFeatureFlagLookup` to resolve FFs.
+- Proto: `apps/Compute/ComputeService.Api/QueryService.proto` - `ImpExecutionOptions` message.
+
+## PR Conventions
+- Always `--draft` mode, prefix with emoji, body starts with Jira link.
+- Changes behind FF use parenthesized emoji: `(⚡️)`.
+
+## Claude Config Backup
+- All `.claude` config files are stored in `~/Useful/claude-code/` and symlinked back to their original locations.
+- After modifying any `.claude` config file (settings, hooks, skills, CLAUDE.md, memory), commit and push the changes:
+  ```
+  cd ~/Useful && git add -A && git commit -m "update claude config" && git push
+  ```

@@ -1,0 +1,17 @@
+{
+  "active_pack": "peasant_fr",
+  "volume": 0.5,
+  "enabled": true,
+  "categories": {
+    "greeting": true,
+    "acknowledge": true,
+    "complete": true,
+    "error": true,
+    "permission": true,
+    "resource_limit": true,
+    "annoyed": true
+  },
+  "annoyed_threshold": 3,
+  "annoyed_window_seconds": 10,
+  "pack_rotation": []
+}
