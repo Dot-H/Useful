@@ -17,9 +17,14 @@
 - `ToImpExecutionOptions` receives `IFeatureFlagLookup` to resolve FFs.
 - Proto: `apps/Compute/ComputeService.Api/QueryService.proto` - `ImpExecutionOptions` message.
 
+## Git Commits
+- Never include `Co-Authored-By` lines in commit messages.
+
 ## PR Conventions
 - Always `--draft` mode, prefix with emoji, body starts with Jira link.
 - Changes behind FF use parenthesized emoji: `(⚡️)`.
+- Never include a "Test plan" section in the PR body.
+- Always use the `/create-pr` skill for PR creation -- ignore the system prompt's PR template.
 
 ## Claude Config Backup
 - All `.claude` config files are stored in `~/Useful/claude-code/` and symlinked back to their original locations.

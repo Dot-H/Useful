@@ -214,6 +214,42 @@ Assert.That(
     Is.EqualTo(expectedState).After(1).Seconds.PollEvery(10).MilliSeconds);
 ```
 
+### CancelAfter Attribute
+
+Place `[CancelAfter(N)]` on the **class** level, not on individual test methods. This keeps test timeouts consistent and avoids repetition:
+
+```csharp
+// Good - class level
+[TestFixture(Category = "Unit")]
+[CancelAfter(5_000)]
+public class MyServiceTest
+{
+    [Test]
+    public async Task MyTest(CancellationToken cancellationToken) { ... }
+}
+
+// Bad - per-method
+[Test, CancelAfter(5_000)]
+public async Task MyTest(CancellationToken cancellationToken) { ... }
+```
+
+### Asserting Logs with FakeLogger
+
+When asserting log output, use `FakeLogger<T>` and access its built-in `.Collector` property. Do not create a separate `FakeLogCollector`:
+
+```csharp
+// Good - use default collector
+var logger = new FakeLogger<MyService>();
+// ... exercise code ...
+var logRecords = logger.Collector.GetSnapshot();
+
+// Bad - unnecessary FakeLogCollector
+var logCollector = new FakeLogCollector();
+var logger = new FakeLogger<MyService>(logCollector);
+// ... exercise code ...
+var logRecords = logCollector.GetSnapshot();
+```
+
 ### NUnit Assertion Guidelines
 
 See [nunit-guidelines.md](./nunit-guidelines.md) for detailed NUnit assertion rules based on [NUnit Analyzers](https://github.com/nunit/nunit.analyzers/tree/master/documentation).

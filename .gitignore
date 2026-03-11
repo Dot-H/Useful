@@ -1,6 +1,8 @@
 *.o
 *.d
-*.sw*
+*.swp
+*.swo
+*.swn
 *.*~
 tags
 node_modules

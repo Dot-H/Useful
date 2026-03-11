@@ -26,7 +26,19 @@
       "Bash(brew info:*)",
       "Bash(brew outdated:*)",
       "Bash(claude --version:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(cd:*)",
+      "Bash(toner generate:*)",
+      "Bash(dotnet list:*)",
+      "WebSearch",
+      "Bash(gh api:*)",
+      "Bash(/tmp/e2e_patterns_summary.md:*)",
+      "Read(//tmp/**)",
+      "Bash(npx prettier:*)",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "Bash(go run:*)",
+      "Skill(launching-local-stack)",
+      "Bash(for f:*)"
     ]
   }
 }
