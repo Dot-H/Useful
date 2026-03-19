@@ -60,7 +60,7 @@ If fixing a bug with a Jira ID, include it: `🐛 [Calendar] Fix date picker [PP
 The PR body MUST start with a link to the Jira ticket:
 
 ```markdown
-[🎟️ JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)
+[🎟️ - JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)
 
 ## Summary
 - Bullet points describing the changes
@@ -72,7 +72,7 @@ Always create PRs in draft mode:
 
 ```bash
 gh pr create --draft --title "EMOJI [Area] Description" --body "$(cat <<'EOF'
-[🎟️ JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)
+[🎟️ - JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)
 
 ## Summary
 - Description of changes
@@ -90,7 +90,7 @@ For branch `alex/SCHED-508/fix-calendar-rendering`:
 
 ```bash
 gh pr create --draft --title "🐛 [Calendar] Fix rendering issue" --body "$(cat <<'EOF'
-[🎟️ SCHED-508](https://pigmentdev.atlassian.net/browse/SCHED-508)
+[🎟️ - SCHED-508](https://pigmentdev.atlassian.net/browse/SCHED-508)
 
 ## Summary
 - Fixed calendar rendering issue when switching months

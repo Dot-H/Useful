@@ -1,4 +1,5 @@
 {
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -60,5 +61,6 @@
         ]
       }
     ]
-  }
+  },
+  "effortLevel": "medium"
 }

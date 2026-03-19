@@ -38,7 +38,10 @@
       "mcp__claude_ai_Notion__notion-fetch",
       "Bash(go run:*)",
       "Skill(launching-local-stack)",
-      "Bash(for f:*)"
+      "Bash(for f:*)",
+      "mcp__circleci-mcp-server__get_latest_pipeline_status",
+      "Bash(cp -r /Users/alexandrebernard/pigment_code/opensource/monorepo/.claude /tmp/sched593-prs/)",
+      "Bash(bash ~/.claude/hooks/peon-ping/peon.sh --toggle)"
     ]
   }
 }

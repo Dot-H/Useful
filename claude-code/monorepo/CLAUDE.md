@@ -17,7 +17,7 @@ If you don't know the Jira ticket ID, ask the user.
 
 - When creating a PR, always create it in **Draft** mode using the `--draft` flag with `gh pr create`
 - Use the `/create-pr` skill to create PRs following Pigment conventions
-- PR body must start with a Jira ticket link: `[🎟️ JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)`
+- PR body must start with a Jira ticket link: `[🎟️ - JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)`
 - PR titles must be prefixed with an emoji indicating the type of change (see `.claude/skills/create-pr.md` for the full list)
 
 ## Code Organization
@@ -30,6 +30,7 @@ If you don't know the Jira ticket ID, ask the user.
 - **Use collection expressions**: Prefer C# 12 collection expressions (e.g., `[1, 2, 3]`) over traditional initializers (e.g., `new double[] { 1, 2, 3 }` or `new List<int> { 1, 2, 3 }`)
 - **Always dispose objects**: Always dispose objects that implement `IDisposable`. Use `using` statements or `using` declarations to ensure proper disposal of resources (e.g., streams, database connections, HTTP clients)
 - **Use minimal collection interfaces**: In method signatures, use the narrowest collection interface that satisfies your needs. Prefer `IEnumerable<T>` if you only iterate once, `IReadOnlyCollection<T>` if you need `.Count`, `IReadOnlyList<T>` if you need indexing. Avoid requiring `List<T>` or `IList<T>` when a read-only interface suffices.
+- **Repository return types**: Repository methods should return `IEnumerable<T>` unless the list is explicitly allocated inside the method body (e.g., via `.ToList()` or `.ToReadOnlyList()`). Never upcast a Dapper result to `IReadOnlyList<T>` without first materializing it.
 - **Use `<see cref="..."/>` in comments**: When referring to a symbol (class, method, property, etc.) inside an XML doc comment or inline comment, use `<see cref="SymbolName"/>` so that developers can navigate to the symbol directly from the IDE.
 - **Run `dotnet format whitespace` after making changes**: Once you are done modifying C# files, always run `dotnet format whitespace` on the affected project(s) to ensure consistent formatting. Use the `--include` flag to scope it to the modified files (e.g., `dotnet format whitespace path/to/Project.csproj --include path/to/File.cs`)
 - **Use camelCase for log attributes**: When using structured logging, always use `camelCase` for attribute names in log message templates (e.g., `{organizationId}`, `{durationMs}`, `{itemCount}`). Never use `PascalCase` for log attributes.
