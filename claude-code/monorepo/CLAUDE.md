@@ -254,3 +254,7 @@ var logRecords = logCollector.GetSnapshot();
 ### NUnit Assertion Guidelines
 
 See [nunit-guidelines.md](./nunit-guidelines.md) for detailed NUnit assertion rules based on [NUnit Analyzers](https://github.com/nunit/nunit.analyzers/tree/master/documentation).
+
+## Database Migrations
+
+- **Idempotent migrations**: Always use `IF NOT EXISTS` (for `CREATE TABLE`, `CREATE INDEX`, etc.) and `IF EXISTS` (for `DROP`) so that migrations can be re-run safely without error.
