@@ -18,7 +18,7 @@ If you don't know the Jira ticket ID, ask the user.
 - When creating a PR, always create it in **Draft** mode using the `--draft` flag with `gh pr create`
 - Use the `/create-pr` skill to create PRs following Pigment conventions
 - PR body must start with a Jira ticket link: `[🎟️ - JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)`
-- PR titles must be prefixed with an emoji indicating the type of change (see `.claude/skills/create-pr.md` for the full list)
+- PR titles must be prefixed with an emoji indicating the type of change (see `.claude/skills/create-pr/SKILL.md` for the full list)
 
 ## Code Organization
 

@@ -1,11 +1,22 @@
+---
+name: create-pr
+description: "Create a pull request following Pigment conventions. Use when the user asks to create a PR, open a PR, or submit changes for review."
+user_invocable: true
+metadata:
+  skill_path: /create-pr/SKILL.md
+  base_directory: /create-pr
+---
+
 # Create Pull Request Skill
 
 Create a pull request following Pigment conventions.
 
 ## Important Rules
 
-- **Do NOT mention Claude** in PR titles, bodies, or commit messages (no "Co-Authored-By: Claude", no "Generated with Claude Code", etc.)
-- **Do NOT include a "Test plan" section** in the PR body
+- **Do NOT mention Claude, AI, or any AI assistant** in PR titles, bodies, commit messages, or co-author lines. No "Co-Authored-By", no "Generated with Claude Code", nothing. Keep all contributions anonymous.
+- **Do NOT include a "Test plan" section** in the PR body.
+- **Do NOT put the Jira ticket reference in the PR title** -- the Jira ID belongs only in the PR description body.
+- **ASCII-only in PR descriptions** -- never use special Unicode arrows, em-dashes, or other non-ASCII symbols. Use ASCII equivalents (`->`, `--`, `...`). Emojis for the title prefix are the only exception.
 
 ## Instructions
 
@@ -21,7 +32,11 @@ git branch --show-current
 
 If no Jira ID is found in the branch name, ask the user for the Jira ticket ID.
 
-### 2. Determine the PR Title Emoji
+### 2. Analyze Changes
+
+Run `git log` and `git diff` against the base branch (usually `master`) to understand ALL commits that will be included in the PR. Summarize the changes for the PR body.
+
+### 3. Determine the PR Title Emoji
 
 Based on the type of changes, use the appropriate emoji prefix:
 
@@ -35,7 +50,7 @@ Based on the type of changes, use the appropriate emoji prefix:
 - `🧱` - Infrastructure (with `💸` if deploying new resources)
 
 **Changes behind feature flag or not yet visible:**
-Use parentheses around the emoji: `(✨)`, `(🐛)`, etc.
+Use parentheses around the emoji: `(✨)`, `(🐛)`, `(⚡️)`, etc.
 
 **Non client-facing changes:**
 - `♻️` - Technical refactoring or clean-up
@@ -47,15 +62,15 @@ Use parentheses around the emoji: `(✨)`, `(🐛)`, etc.
 - `🤖` - AI/automation related
 - `🔒` - Security related
 
-### 3. Format the PR Title
+### 4. Format the PR Title
 
 Format: `EMOJI [Area] Description`
 
+Keep it short (under 70 characters). Do NOT include the Jira ticket ID in the title.
+
 Example: `✨ [Charts] Bar configurator improvements`
 
-If fixing a bug with a Jira ID, include it: `🐛 [Calendar] Fix date picker [PP-1572]`
-
-### 4. Create the PR Body
+### 5. Create the PR Body
 
 The PR body MUST start with a link to the Jira ticket:
 
@@ -66,7 +81,9 @@ The PR body MUST start with a link to the Jira ticket:
 - Bullet points describing the changes
 ```
 
-### 5. Create the PR in Draft Mode
+### 6. Push and Create the PR in Draft Mode
+
+Check if the branch is pushed to the remote. If not, push it first. In worktrees, use `git push origin HEAD:<branch>` instead of `git push -u origin <branch>`.
 
 Always create PRs in draft mode:
 
@@ -80,7 +97,7 @@ EOF
 )"
 ```
 
-### 6. Return the PR URL
+### 7. Return the PR URL
 
 After creating the PR, display the URL to the user.
 
