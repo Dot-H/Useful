@@ -41,7 +41,24 @@
       "Bash(for f:*)",
       "mcp__circleci-mcp-server__get_latest_pipeline_status",
       "Bash(cp -r /Users/alexandrebernard/pigment_code/opensource/monorepo/.claude /tmp/sched593-prs/)",
-      "Bash(bash ~/.claude/hooks/peon-ping/peon.sh --toggle)"
+      "Bash(bash ~/.claude/hooks/peon-ping/peon.sh --toggle)",
+      "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/DependencyGraph/DependencyOrchestrator -name *.csproj)",
+      "Bash(cp:*)",
+      "Bash(dotnet --info)",
+      "Bash(cp -f /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/Analyzers/Pigment.CodeFixes/bin/Debug/netstandard2.0/Pigment.Analyzers.dll /tmp/sched-593-reset-jobs/apps/Analyzers/Pigment.CodeFixes/bin/Debug/netstandard2.0/Pigment.Analyzers.dll)",
+      "Bash(touch /tmp/sched-593-reset-jobs/apps/Analyzers/Pigment.CodeFixes/bin/Debug/netstandard2.0/Pigment.Analyzers.dll)",
+      "Bash(cp -r /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/Common/Pigment.Common.NLogLayoutRenderers/obj/Debug /tmp/sched-593-reset-jobs/apps/Common/Pigment.Common.NLogLayoutRenderers/obj/)",
+      "Bash(cp -r /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/Common/Pigment.Common.NLogLayoutRenderers/bin /tmp/sched-593-reset-jobs/apps/Common/Pigment.Common.NLogLayoutRenderers/)",
+      "Skill(new-migration)",
+      "Bash(dotnet --version)",
+      "Bash(dotnet sdk:*)",
+      "Bash(FILE='/private/tmp/DependencyOrchestrator.Test__ccita-b9e10e72-330e-5968-9e34-fd4e30250140-8ad4ma_2026-03-27_09_50_05.xml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Checksum-Mode=ENABLED&X-Amz-Credential=ASIAQVFQINEOFPPMDGRG%2F20260327%2Fus-east-1%2Fs3%2Faws4')",
+      "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo/**)",
+      "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo -name *GlobalConfiguration* -type f)",
+      "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo -name *ChangeToCompleteBacklog*.cs -type f)",
+      "Read(//private/tmp/sched-593-enqueue-listall/apps/DependencyGraph/DependencyOrchestrator/FairJobCompletion/Repository/**)",
+      "Read(//private/tmp/sched-593-enqueue-listall/apps/DependencyGraph/DependencyOrchestrator/FairJobCompletion/Entities/**)",
+      "Bash(gh pr:*)"
     ]
   }
 }
