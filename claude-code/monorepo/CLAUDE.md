@@ -34,7 +34,7 @@ If you don't know the Jira ticket ID, ask the user.
 - **Use `<see cref="..."/>` in comments**: When referring to a symbol (class, method, property, etc.) inside an XML doc comment or inline comment, use `<see cref="SymbolName"/>` so that developers can navigate to the symbol directly from the IDE.
 - **Run `dotnet format whitespace` after making changes**: Once you are done modifying C# files, always run `dotnet format whitespace` on the affected project(s) to ensure consistent formatting. Use the `--include` flag to scope it to the modified files (e.g., `dotnet format whitespace path/to/Project.csproj --include path/to/File.cs`)
 - **Use camelCase for log attributes**: When using structured logging, always use `camelCase` for attribute names in log message templates (e.g., `{organizationId}`, `{durationMs}`, `{itemCount}`). Never use `PascalCase` for log attributes.
-- **Never inline `if` statements**: Always use braces and a newline for `if` bodies, even for single-line statements. Never write `if (cond) DoSomething();` on a single line.
+- **Never inline `if` statements**: Never write `if (cond) DoSomething();` on a single line. Always put the body on its own line. Use braces when the condition or the body spans multiple lines; omit braces when both fit on a single line each.
 
 ## DataDog Metrics (OpenTelemetry)
 
@@ -130,7 +130,8 @@ Assert.That(measurements[0].MatchesTags([new("isSuccess", true)]), Is.True);
 ## Git Worktrees
 
 - **Guidelines belong in the main repository**: When using git worktrees, always save guidelines and documentation updates (like this CLAUDE.md file) in the main repository, not in the worktree. The worktree should only contain feature-specific changes.
-- **Copy `.claude` folder to worktrees**: When creating a worktree, always copy the `.claude` folder from the main repository into the worktree, even if it is ignored by git. This ensures Claude Code has access to project guidelines and skills in the worktree.
+- **Copy `.claude` configuration files to worktrees**: When creating a worktree, always copy the `.claude` configuration files (skills, `CLAUDE.md`, etc.) from the main repository into the worktree, even if they are ignored by git. This ensures Claude Code has access to project guidelines and skills in the worktree. Only copy the configuration files, not the entire `.claude` folder.
+- **Never create worktrees inside `.claude`**: Always create worktrees next to the original repository folder (at the same level), never inside the `.claude` directory.
 
 ## Testing Patterns
 
@@ -195,6 +196,24 @@ public class MyServiceTest
     }
 }
 ```
+
+### Default Logger in Test Helpers
+
+When a test helper (or `Build<Service>` factory) needs an `ILogger` and the caller did not provide one, default to `ConsoleLogger.New<T>()` (from `Pigment.TestHelpers`), not `NullLogger.Instance`.
+
+`ConsoleLogger` writes log lines to the test output, which makes failing tests much easier to debug. `NullLogger` silently drops everything, so a failure on CI gives no breadcrumbs. Reserve `NullLogger.Instance` for tests that intentionally assert on the absence of log noise.
+
+```csharp
+// BAD: log messages from the system under test disappear
+private static MyService BuildService(ILogger<MyService>? logger = null)
+    => new(logger ?? NullLogger<MyService>.Instance);
+
+// GOOD: log messages show up next to the test failure
+private static MyService BuildService(ILogger<MyService>? logger = null)
+    => new(logger ?? ConsoleLogger.New<MyService>());
+```
+
+When a test needs to assert on log records, the caller still passes its own `FakeLogger<T>` explicitly -- the default only matters when the caller doesn't care.
 
 ### Running Tests Multiple Times
 

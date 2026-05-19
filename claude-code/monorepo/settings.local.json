@@ -58,7 +58,25 @@
       "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo -name *ChangeToCompleteBacklog*.cs -type f)",
       "Read(//private/tmp/sched-593-enqueue-listall/apps/DependencyGraph/DependencyOrchestrator/FairJobCompletion/Repository/**)",
       "Read(//private/tmp/sched-593-enqueue-listall/apps/DependencyGraph/DependencyOrchestrator/FairJobCompletion/Entities/**)",
-      "Bash(gh pr:*)"
+      "Bash(gh pr:*)",
+      "mcp__circleci-mcp-server__get_job_test_results",
+      "mcp__circleci-mcp-server__get_build_failure_logs",
+      "Bash(find apps:*)",
+      "Bash(find apps/DependencyGraph -name *change_to_complete* -o -name *migration*change*backlog*)",
+      "mcp__circleci-mcp-server__find_flaky_tests",
+      "Bash(du -sh ~/Library/Containers/*/)",
+      "Bash(du -sh ~/Library/Logs/*/)",
+      "Bash(docker system df:*)",
+      "Read(//private/tmp/**)",
+      "Bash(unzip -o notion_md/ExportBlock-f70e7a3f-8e1f-43a7-af5b-3d9ce5677deb-Part-1.zip -d notion_md_inner)",
+      "Bash(mv 1776080474_drop_scopes_column_from_dependency_source.up.sql 1776327837_drop_scopes_column_from_dependency_source.up.sql)",
+      "Bash(mv 1776080474_drop_scopes_column_from_dependency_source.down.sql 1776327837_drop_scopes_column_from_dependency_source.down.sql)",
+      "Bash(mv 1776080475_drop_scopes_column_from_dependency_target.up.sql 1776327838_drop_scopes_column_from_dependency_target.up.sql)",
+      "Bash(mv 1776080475_drop_scopes_column_from_dependency_target.down.sql 1776327838_drop_scopes_column_from_dependency_target.down.sql)",
+      "Bash(cp -r /Users/alexandrebernard/pigment_code/opensource/monorepo/.claude /Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/.claude)",
+      "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/apps/EndToEndTesting/TestSuites/**)",
+      "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/**)",
+      "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/DependencyOrchestrator* -type d)"
     ]
   }
 }

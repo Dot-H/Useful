@@ -66,6 +66,19 @@ Assert.That(collection, Has.Some.EqualTo(item));
 Assert.That(str.Contains("text"), Is.True);
 ```
 
+### Do Not Combine Has.Count with Is.EquivalentTo or Is.EqualTo on Collections
+
+`Is.EquivalentTo` and `Is.EqualTo` already assert the collection size. A preceding `Has.Count` check is redundant:
+
+```csharp
+// Good - single assertion covers both size and content
+Assert.That(actual, Is.EquivalentTo(expected));
+
+// Bad - redundant count check
+Assert.That(actual, Has.Count.EqualTo(3));
+Assert.That(actual, Is.EquivalentTo(expected));
+```
+
 ## Exception Testing (NUnit2044)
 
 Use delegates for exception assertions:
