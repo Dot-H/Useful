@@ -39,6 +39,7 @@ If you don't know the Jira ticket ID, ask the user.
 - **Use camelCase for log attributes**: When using structured logging, always use `camelCase` for attribute names in log message templates (e.g., `{organizationId}`, `{durationMs}`, `{itemCount}`). Never use `PascalCase` for log attributes.
 - **Never inline `if` statements**: Never write `if (cond) DoSomething();` on a single line. Always put the body on its own line. Use braces when the condition or the body spans multiple lines; omit braces when both fit on a single line each.
 - **Use `UnreachableSwitchCaseException` for exhaustive switches**: When switching over an enum (or boolean/tuple/type hierarchy), throw `UnreachableSwitchCaseException` from `Pigment.Common.System` in the default case rather than `ArgumentOutOfRangeException`. The analyzer leverages it to verify all enum values (or derived types) are handled. Use `UnreachableSwitchCaseException<T>` when switching over a type hierarchy.
+- **No optional parameters in production code**: Do not use optional (default-valued) parameters in production method signatures. Every caller must be explicit about what they pass. Optional parameters are allowed in test helpers (e.g., `Build<Service>` factory methods) where they serve as "don't care" defaults.
 
 ## DataDog Metrics (OpenTelemetry)
 

@@ -270,3 +270,11 @@ fi
 alias peon="bash ~/.claude/hooks/peon-ping/peon.sh"
 [ -f ~/.claude/hooks/peon-ping/completions.bash ] && source ~/.claude/hooks/peon-ping/completions.bash
 export PATH="$HOME/.local/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/alexandrebernard/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
