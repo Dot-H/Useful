@@ -24,6 +24,10 @@ If you don't know the Jira ticket ID, ask the user.
 
 - **One file per class/interface**: Each class, interface, or enum should be in its own file. Do not put multiple types in the same file unless they are closely related nested types.
 
+## Feature Flags
+
+- **Reserve removed flag IDs**: When removing a feature flag from `FeatureFlags.proto`, never delete the enum value outright. Replace it with (or extend) a `reserved` statement covering that ID. This prevents future accidental reuse of a slot that may still exist in serialized data (SQL tables, backups). Example: removing `FeatureFlag_Foo = 50063` -> add `reserved 50063;` (or extend the adjacent reserved range to include it).
+
 ## C# Coding Standards
 
 - **No `/// <inheritdoc/>`**: Never use `/// <inheritdoc/>` - write explicit documentation or omit XML docs entirely
