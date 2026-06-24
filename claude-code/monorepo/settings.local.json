@@ -80,17 +80,5 @@
       "mcp__claude_ai_Notion__notion-create-pages",
       "mcp__claude_ai_Notion__notion-query-data-sources"
     ]
-  },
-  "autoMode": {
-    "environment": [
-      "$defaults",
-      "The Notion workspace (claude_ai_Notion MCP) is Pigment's internal engineering tool. Writing
-  DataDog trace metadata to it via the archivist skill is an authorized internal operation."
-    ],
-    "allow": [
-      "$defaults",
-      "Spawning subagents to write local trace metadata files to the internal Notion database via
-  notion-create-pages is permitted."
-    ]
   }
 }
