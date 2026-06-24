@@ -76,7 +76,21 @@
       "Bash(cp -r /Users/alexandrebernard/pigment_code/opensource/monorepo/.claude /Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/.claude)",
       "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/apps/EndToEndTesting/TestSuites/**)",
       "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/**)",
-      "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/DependencyOrchestrator* -type d)"
+      "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/DependencyOrchestrator* -type d)",
+      "mcp__claude_ai_Notion__notion-create-pages",
+      "mcp__claude_ai_Notion__notion-query-data-sources"
+    ]
+  },
+  "autoMode": {
+    "environment": [
+      "$defaults",
+      "The Notion workspace (claude_ai_Notion MCP) is Pigment's internal engineering tool. Writing
+  DataDog trace metadata to it via the archivist skill is an authorized internal operation."
+    ],
+    "allow": [
+      "$defaults",
+      "Spawning subagents to write local trace metadata files to the internal Notion database via
+  notion-create-pages is permitted."
     ]
   }
 }
