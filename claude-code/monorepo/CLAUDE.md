@@ -5,6 +5,10 @@
 - **Never mention Claude**: Do not mention Claude, AI, or any AI assistant in commits, PR descriptions, code comments, co-author lines, or any other artifacts. Keep all contributions anonymous.
 - **ASCII-only in written artifacts**: Never use special Unicode arrows (`←`, `→`, `↑`, `↓`), dashes (`—`, `–`), or other non-ASCII symbols in code, comments, commit messages, PR descriptions, or markdown files. Use ASCII equivalents instead: `<-`, `->`, `--`, `...`, etc.
 
+## Swagger
+
+- **Never edit `api.swagger.json` manually**. Always regenerate it by building the service: `dotnet build --no-incremental path/to/Service/Service.csproj`. The build target writes the file automatically via the `<GenerateSwaggerFile>True</GenerateSwaggerFile>` MSBuild property.
+
 ## Branch Naming
 
 When creating a branch, follow this pattern: `username/JIRA-ID/short-description`
