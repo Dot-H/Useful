@@ -31,46 +31,14 @@ the polling loop until you have both.
 
 ---
 
-## Step 1 -- set up a worktree (if needed)
-
-All code fixes must happen in a git worktree so they do not disturb the
-user's working tree.
-
-Check whether a worktree already exists for the PR branch:
-
-```bash
-gh pr view <PR> --json headRefName -q '.headRefName'
-git worktree list
-```
-
-If no worktree exists for that branch, create one next to the main repository
-folder (never inside `.claude`):
-
-```bash
-# From inside the main repo
-BRANCH=$(gh pr view <PR> --json headRefName -q '.headRefName')
-WORKTREE_PATH="../monorepo-$BRANCH"
-git worktree add "$WORKTREE_PATH" "$BRANCH"
-```
-
-After creating the worktree, copy the `.claude` configuration files into it
-so the fix subagent has access to project guidelines and skills:
-
-```bash
-cp -r .claude/skills "$WORKTREE_PATH/.claude/"
-cp .claude/CLAUDE.md "$WORKTREE_PATH/.claude/"
-```
-
----
-
-## Step 2 -- the polling loop
+## Step 1 -- the polling loop
 
 Use the `/loop` skill with a 3-minute interval, passing this skill as the
 prompt, so that the loop re-enters here on each tick.
 
 On each iteration:
 
-### 2.1 Fetch all checks
+### 1.1 Fetch all checks
 
 ```bash
 gh pr checks <PR> --json name,state,conclusion,status
@@ -82,7 +50,7 @@ or, if the above is unavailable:
 gh pr view <PR> --json statusCheckRollup -q '.statusCheckRollup[]'
 ```
 
-### 2.2 Classify the checks
+### 1.2 Classify the checks
 
 For each check, determine its category:
 
@@ -104,7 +72,7 @@ state.
 A `trigger-*` check that is still `PENDING` means the trigger was not yet
 activated -- ignore it (do not wait for the corresponding real job).
 
-### 2.3 Decide the overall state
+### 1.3 Decide the overall state
 
 From the non-ignored checks, compute:
 
@@ -115,18 +83,18 @@ From the non-ignored checks, compute:
 - **any_red**: at least one non-ignored check has conclusion `FAILURE`,
   `ERROR`, or `CANCELLED`.
 
-### 2.4 Branch on the state
+### 1.4 Branch on the state
 
 **Not all done yet** -> log the pending checks and schedule the next poll in
 180 seconds (3 minutes), passing the same skill prompt so the loop continues.
 
-**All done and all green** -> proceed to Step 3 (assign reviewers).
+**All done and all green** -> proceed to Step 2 (assign reviewers).
 
-**Any red** -> proceed to Step 4 (diagnose and fix).
+**Any red** -> proceed to Step 3 (diagnose and fix).
 
 ---
 
-## Step 3 -- assign reviewers and mark ready for review
+## Step 2 -- assign reviewers and mark ready for review
 
 ```bash
 gh pr edit <PR> --add-reviewer <reviewer1>,<reviewer2>,...
@@ -138,9 +106,37 @@ ends here -- do not reschedule.
 
 ---
 
-## Step 4 -- diagnose a red check and fix it
+## Step 3 -- diagnose a red check and fix it
 
-### 4.1 Collect failure context via CircleCI MCP
+### 3.1 Set up a worktree
+
+All code fixes must happen in a git worktree so they do not disturb the
+user's working tree.
+
+Check whether a worktree already exists for the PR branch:
+
+```bash
+BRANCH=$(gh pr view <PR> --json headRefName -q '.headRefName')
+git worktree list
+```
+
+If no worktree exists for that branch, create one next to the main repository
+folder (never inside `.claude`):
+
+```bash
+WORKTREE_PATH="../monorepo-$BRANCH"
+git worktree add "$WORKTREE_PATH" "$BRANCH"
+```
+
+After creating the worktree, copy the `.claude` configuration files into it
+so the fix subagent has access to project guidelines and skills:
+
+```bash
+cp -r .claude/skills "$WORKTREE_PATH/.claude/"
+cp .claude/CLAUDE.md "$WORKTREE_PATH/.claude/"
+```
+
+### 3.2 Collect failure context via CircleCI MCP
 
 For each red check, extract the CircleCI job name from the check name
 (GitHub check names for CircleCI jobs follow the pattern
@@ -157,7 +153,7 @@ Use the CircleCI MCP tools to fetch build logs:
 Gather enough context to understand what failed: compiler error, test
 failure, lint violation, etc.
 
-### 4.2 Boot a fix subagent in the worktree
+### 3.3 Boot a fix subagent in the worktree
 
 Fork a subagent (using the Agent tool with `subagent_type: "fork"`) and
 give it:
@@ -176,11 +172,11 @@ The subagent must:
 5. Commit with a clear message (no "Co-Authored-By" lines, ASCII only).
 6. **Not push**.
 
-### 4.3 Report and reschedule
+### 3.4 Report and stop
 
-After the subagent commits, report the fix commit hash to the user and
-reschedule the poll (180 seconds) so CI will pick up the new commit on the
-next push (remind the user they need to push when ready).
+After the subagent commits, report the fix commit hash to the user, remind
+them to push the branch, and stop the loop. The user will re-invoke the skill
+once the fix is pushed and CI re-runs.
 
 If the subagent cannot determine the root cause or the fix looks risky,
 report the failure logs to the user and stop -- do not attempt a speculative
