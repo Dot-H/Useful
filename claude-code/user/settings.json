@@ -1,5 +1,5 @@
 {
-  "model": "opus",
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -62,5 +62,8 @@
       }
     ]
   },
-  "effortLevel": "high"
+  "enabledPlugins": {
+    "datadog@claude-plugins-official": true
+  },
+  "effortLevel": "medium"
 }

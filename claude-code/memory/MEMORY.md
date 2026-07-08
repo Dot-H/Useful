@@ -2,6 +2,7 @@
 
 - [Armset optimiser (GREAT-90)](project_armset_optimiser.md) — BlankAccessUnionSplitOptimizer, two-branch UNION ALL rewrite of access-rights filters (PR #131818)
 - [OuterJoinToSemiJoinOptimizer split (GREAT-90)](great-90-outer-semi-optimiser-sibling.md) — standalone sibling PR split from armset branch (PR #132065)
+- [Formula diff e2e branch split (GREAT-79)](project_great79_formula_diff_split.md) — splitting refacto-formula-diff-e2e into small PRs; check if tests exist before assuming (PR #132092)
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
