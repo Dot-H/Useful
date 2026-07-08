@@ -1,5 +1,8 @@
 # Memory
 
+- [Armset optimiser (GREAT-90)](project_armset_optimiser.md) — BlankAccessUnionSplitOptimizer, two-branch UNION ALL rewrite of access-rights filters (PR #131818)
+- [OuterJoinToSemiJoinOptimizer split (GREAT-90)](great-90-outer-semi-optimiser-sibling.md) — standalone sibling PR split from armset branch (PR #132065)
+
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
 - If a worktree commit creates a "root-commit" with all files, use `git fetch origin <branch>` + `git reset --hard origin/<branch>` to recover.
