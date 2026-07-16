@@ -1,5 +1,5 @@
 {
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -65,5 +65,7 @@
   "enabledPlugins": {
     "datadog@claude-plugins-official": true
   },
-  "effortLevel": "medium"
+  "effortLevel": "high",
+  "autoUpdatesChannel": "stable",
+  "minimumVersion": "2.1.210"
 }
