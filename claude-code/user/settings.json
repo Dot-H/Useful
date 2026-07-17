@@ -65,7 +65,7 @@
   "enabledPlugins": {
     "datadog@claude-plugins-official": true
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "autoUpdatesChannel": "stable",
   "minimumVersion": "2.1.210"
 }
