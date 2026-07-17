@@ -3,7 +3,7 @@
 - [Armset optimiser (GREAT-90)](project_armset_optimiser.md) — BlankAccessUnionSplitOptimizer, two-branch UNION ALL rewrite of access-rights filters (PR #131818)
 - [OuterJoinToSemiJoinOptimizer split (GREAT-90)](great-90-outer-semi-optimiser-sibling.md) — standalone sibling PR split from armset branch (PR #132065)
 - [SemiJoin transform gotcha (GREAT-90)](great-90-semijoin-transform-gotcha.md) — SemiJoinOperation.TryTransform doesn't self-apply the transformer; tree-walk transformers never see semi-join nodes
-- [ReferencedColumnsIndex scoping (GREAT-90)](great-90-referenced-columns-index-scoping.md) — JoinOperation is the only implicit renamer; dead-column check fixed via join-alias chains; review leftovers listed
+- [ReferencedColumnsIndex scoping (GREAT-90)](great-90-referenced-columns-index-scoping.md) — JoinOperation is the only implicit renamer; dead-column check guarded by structural bail-out + probe re-sanctioning; lineage follow-up agreed
 - [Formula diff e2e branch split (GREAT-79)](project_great79_formula_diff_split.md) — splitting refacto-formula-diff-e2e into small PRs; check if tests exist before assuming (PR #132092)
 - [PK IS NOT NULL pushdown fix (GREAT-41)](project_great41_pk_notnull_pushdown.md) — redundant PK non-null pushdown fixed in DatasetLoadOptimizer (PR #133031); old great-41 worktrees are stale, don't reuse
 - [FormulaDiff reservation index (GREAT-79)](great79-formula-diff-reservation-index.md) — ReserveJobs timeout root cause (dead partial index) + flags=0 index fix (PR #133132)
