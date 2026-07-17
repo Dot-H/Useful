@@ -4,10 +4,12 @@
 - [OuterJoinToSemiJoinOptimizer split (GREAT-90)](great-90-outer-semi-optimiser-sibling.md) — standalone sibling PR split from armset branch (PR #132065)
 - [SemiJoin transform gotcha (GREAT-90)](great-90-semijoin-transform-gotcha.md) — SemiJoinOperation.TryTransform doesn't self-apply the transformer; tree-walk transformers never see semi-join nodes
 - [ReferencedColumnsIndex scoping (GREAT-90)](great-90-referenced-columns-index-scoping.md) — JoinOperation is the only implicit renamer; dead-column check guarded by structural bail-out + probe re-sanctioning; lineage follow-up agreed
+- [GetDemandedInputColumns lineage (GREAT-90)](great90-demanded-input-columns.md) — per-op column lineage API + LogicalExecutionPlan.DemandedColumnsByOperation aggregate (branch alex/GREAT-90/demanded-input-columns)
 - [Formula diff e2e branch split (GREAT-79)](project_great79_formula_diff_split.md) — splitting refacto-formula-diff-e2e into small PRs; check if tests exist before assuming (PR #132092)
 - [PK IS NOT NULL pushdown fix (GREAT-41)](project_great41_pk_notnull_pushdown.md) — redundant PK non-null pushdown fixed in DatasetLoadOptimizer (PR #133031); old great-41 worktrees are stale, don't reuse
 - [FormulaDiff reservation index (GREAT-79)](great79-formula-diff-reservation-index.md) — ReserveJobs timeout root cause (dead partial index) + flags=0 index fix (PR #133132)
 - [Stale QuartzJob<T> cleanup (GREAT-79)](great79-stale-quartzjob-cleanup.md) — scoped DI-check fix in CleanDeprecatedQuartzConfigurationExecutor (PR #133311); prior blanket fix was reverted, don't redo that mistake
+- [FormulaDiff finalize clobber (GREAT-79)](great79-formula-diff-finalize-clobber.md) -- flaky T007_DownloadDiffReport: async finalize clobbered finalized task flags; guarded via TryFinalizeTaskFlags (PR #133403)
 - [FormulaDiff throughput ceiling (GREAT-79)](great79-formula-diff-throughput-ceiling.md) -- x5/x6 explained: 20-89s per diff x min(8, IMP share) slots/org, orgs saturated (proven via CC "Poll finished" logs); Notion 3a0adbe6acf580cfa4c6f55a430a63da
 
 ## Git Worktrees
