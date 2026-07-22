@@ -11,6 +11,7 @@
 - [FormulaDiff reservation index (GREAT-79)](great79-formula-diff-reservation-index.md) — ReserveJobs timeout root cause (dead partial index) + flags=0 index fix (PR #133132)
 - [Stale QuartzJob<T> cleanup (GREAT-79)](great79-stale-quartzjob-cleanup.md) — scoped DI-check fix in CleanDeprecatedQuartzConfigurationExecutor (PR #133311); prior blanket fix was reverted, don't redo that mistake
 - [FormulaDiff finalize clobber (GREAT-79)](great79-formula-diff-finalize-clobber.md) -- flaky T007_DownloadDiffReport: async finalize clobbered finalized task flags; guarded via TryFinalizeTaskFlags (PR #133403)
+- [Remove legacy Quartz diff executor (GREAT-79)](great79-remove-legacy-quartz-diff-executor.md) -- dropped legacy Workspace Quartz FormulaDiffJobExecutor + PIGMENT_USE_LEGACY_FORMULA_DIFF flag (PR #134035); TWO same-named classes, Compute one is still LIVE
 - [FormulaDiff throughput ceiling (GREAT-79)](great79-formula-diff-throughput-ceiling.md) -- diffs are LOWEST-priority IMP (prio 150); latency-bound: exec ~6s but ~35s queued for a low-prio slot behind interactive + Formula recompute; ~5-12% of low-prio IMP; pipeline balanced ~16k/h (received=published=completed); CANNOT attribute CC pending to diffs (priority-band only); paused orgs out of scope; Notion 3a0adbe6acf580cfa4c6f55a430a63da
 
 ## Git Worktrees
