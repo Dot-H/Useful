@@ -5,6 +5,7 @@
 - [SemiJoin transform gotcha (GREAT-90)](great-90-semijoin-transform-gotcha.md) — SemiJoinOperation.TryTransform doesn't self-apply the transformer; tree-walk transformers never see semi-join nodes
 - [ReferencedColumnsIndex scoping (GREAT-90)](great-90-referenced-columns-index-scoping.md) — JoinOperation is the only implicit renamer; dead-column check guarded by structural bail-out + probe re-sanctioning; lineage follow-up agreed
 - [SemiJoinPushdownOptimizer (GREAT-90)](great-90-semijoin-pushdown-optimizer.md) — standalone push-semi-joins-down optimizer on master (PR #133474); UnionAll deferred (unique-id invariant); shared PushdownHelpers
+- [SemiJoinPushdown probe-key constraint (GREAT-90)](great-90-semijoin-pushdown-probe-key-constraint.md) — always-on optimizer crashed/dropped rows on ARM; guard: only push when all bindings are probe primary keys (small-branch executor limit)
 - [GetDemandedInputColumns lineage (GREAT-90)](great90-demanded-input-columns.md) — per-op column lineage API + LogicalExecutionPlan.DemandedColumnsByOperation aggregate (branch alex/GREAT-90/demanded-input-columns)
 - [Formula diff e2e branch split (GREAT-79)](project_great79_formula_diff_split.md) — splitting refacto-formula-diff-e2e into small PRs; check if tests exist before assuming (PR #132092)
 - [PK IS NOT NULL pushdown fix (GREAT-41)](project_great41_pk_notnull_pushdown.md) — redundant PK non-null pushdown fixed in DatasetLoadOptimizer (PR #133031); old great-41 worktrees are stale, don't reuse
