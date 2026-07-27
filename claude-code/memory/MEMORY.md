@@ -7,7 +7,7 @@
 - [SemiJoinPushdownOptimizer (GREAT-90)](great-90-semijoin-pushdown-optimizer.md) — standalone push-semi-joins-down optimizer on master (PR #133474); UnionAll deferred (unique-id invariant); shared PushdownHelpers
 - [SemiJoinPushdown probe-key constraint (GREAT-90)](great-90-semijoin-pushdown-probe-key-constraint.md) — always-on optimizer crashed/dropped rows on ARM; guard: only push when all bindings are probe primary keys (small-branch executor limit)
 - [Git branch case-collision gotcha](git-branch-case-collision-gotcha.md) — mixed-case branches collide on case-insensitive FS (git status flood); GitHub case-only rename CLOSES an open PR's head branch
-- [Scan column narrowing (GREAT-90)](great90-scan-column-narrowing.md) — ScanColumnNarrowingOptimizer (PR #134540); NEVER prune PK columns from a scan (hard throws)
+- [Column pruning (GREAT-90)](great90-column-pruning.md) — ColumnPruningOptimizer top-down visitor (PR #134540); PKs, unit roots and Deduplicate are hard barriers
 - [GetDemandedInputColumns lineage (GREAT-90)](great90-demanded-input-columns.md) — per-op column lineage API + LogicalExecutionPlan.DemandedColumnsByOperation aggregate (branch alex/GREAT-90/demanded-input-columns)
 - [Formula diff e2e branch split (GREAT-79)](project_great79_formula_diff_split.md) — splitting refacto-formula-diff-e2e into small PRs; check if tests exist before assuming (PR #132092)
 - [PK IS NOT NULL pushdown fix (GREAT-41)](project_great41_pk_notnull_pushdown.md) — redundant PK non-null pushdown fixed in DatasetLoadOptimizer (PR #133031); old great-41 worktrees are stale, don't reuse
