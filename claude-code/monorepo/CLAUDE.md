@@ -11,11 +11,15 @@
 
 ## Branch Naming
 
-When creating a branch, follow this pattern: `username/JIRA-ID/short-description`
+When creating a branch, follow this pattern: `username/jira-id/short-description`, all in **lower case** (including the Jira ID).
 
-Example: `alex/SCHED-508/fix-calendar-rendering`
+Example: `alex/sched-508/fix-calendar-rendering`
 
 If you don't know the Jira ticket ID, ask the user.
+
+- **Every new branch must be entirely lower case.** Mixed-case prefixes (`alex/GREAT-90/...` next to `alex/great-90/...`) collide on case-insensitive filesystems (macOS/Windows): both spellings share one on-disk ref directory, and a ref repack can bake the wrong case into `packed-refs` and break HEAD resolution.
+- **Preserve the exact casing of branches that already exist on the remote.** When working on a branch the remote holds in upper case (check with `git ls-remote origin | grep -i <name>`), keep pushing to that exact name and never case-rename it: a case-only rename of an open PR's head branch closes the PR irrecoverably.
+- Goal: converge on lower case only. The existing upper-case branches will be deleted once their PRs are done; do not create new ones.
 
 ## Pull Requests
 
