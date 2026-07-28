@@ -1,5 +1,5 @@
 {
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -64,6 +64,11 @@
   },
   "enabledPlugins": {
     "datadog@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "CronCreate"
+    ]
   },
   "effortLevel": "medium",
   "autoUpdatesChannel": "latest",

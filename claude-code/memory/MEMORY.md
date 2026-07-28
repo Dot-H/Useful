@@ -18,6 +18,7 @@
 - [IMP executor join-shape limits (GREAT-90)](great90-imp-executor-side-binding-limit.md) — 3 invariants LogicalPlanBuilder guarantees that ImpResult requires but InferSchema doesn't; well-formed + SQL-valid != runnable
 - [Outer-semi free-key guard (GREAT-90)](great90-outer-semi-free-key-guard.md) — guard rejected EVERY real ARM plan (@side_key_* PKs); relaxed for side-bound (pinned) free keys
 - [FormulaDiff throughput ceiling (GREAT-79)](great79-formula-diff-throughput-ceiling.md) -- diffs are LOWEST-priority IMP (prio 150); latency-bound: exec ~6s but ~35s queued for a low-prio slot behind interactive + Formula recompute; ~5-12% of low-prio IMP; pipeline balanced ~16k/h (received=published=completed); CANNOT attribute CC pending to diffs (priority-band only); paused orgs out of scope; Notion 3a0adbe6acf580cfa4c6f55a430a63da
+- [DO job-status endpoint (GREAT-79)](great79-do-job-status-endpoint.md) -- GetJobStatusesInSmallChanges capped at 128-node changes on purpose; no job index in the execution graph (PR #134781)
 - [SemiJoinPushdown plumbing (GREAT-90)](great-90-semijoin-pushdown-plumbing.md) -- wired FF/formula option/view options for the #133474 optimizer (PR #134754); field-number collision risk with unmerged ColumnPruning PR #134540
 
 ## Git Worktrees
