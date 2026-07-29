@@ -4,7 +4,7 @@
       "CronCreate"
     ]
   },
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
