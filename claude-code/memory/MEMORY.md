@@ -1,6 +1,6 @@
 # Memory
 
-- [Armset optimiser (GREAT-90)](project_armset_optimiser.md) — BlankAccessUnionSplitOptimizer, two-branch UNION ALL rewrite of access-rights filters (PR #131818)
+- [Armset optimiser (GREAT-90)](project_armset_optimiser.md) — BlankAccessUnionSplitOptimizer, two-branch UNION ALL rewrite of access-rights filters; revived 2026-08-04 on lowercase branch rebased on outer-semi (old PR #131818 closed)
 - [OuterJoinToSemiJoinOptimizer split (GREAT-90)](great-90-outer-semi-optimiser-sibling.md) — standalone sibling PR split from armset branch (PR #132065)
 - [SemiJoin transform gotcha (GREAT-90)](great-90-semijoin-transform-gotcha.md) — RESOLVED: SemiJoin/UnionAll TryTransform now self-apply in prefix order; tree walks see semi-join nodes
 - [ReferencedColumnsIndex scoping (GREAT-90)](great-90-referenced-columns-index-scoping.md) — JoinOperation is the only implicit renamer; dead-column check is lineage-aware demand; IndexConvertibleFilters bail-out removed 2026-07-24 (nested guards convert everywhere)
