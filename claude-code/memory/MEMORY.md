@@ -20,7 +20,9 @@
 - [FormulaDiff throughput ceiling (GREAT-79)](great79-formula-diff-throughput-ceiling.md) -- diffs are LOWEST-priority IMP (prio 150); latency-bound: exec ~6s but ~35s queued for a low-prio slot behind interactive + Formula recompute; ~5-12% of low-prio IMP; pipeline balanced ~16k/h (received=published=completed); CANNOT attribute CC pending to diffs (priority-band only); paused orgs out of scope; Notion 3a0adbe6acf580cfa4c6f55a430a63da
 - [DO job-status endpoint (GREAT-79)](great79-do-job-status-endpoint.md) -- GetJobStatusesInSmallChanges capped at 128-node changes on purpose; no job index in the execution graph (PR #134781)
 - [SemiJoinPushdown plumbing (GREAT-90)](great-90-semijoin-pushdown-plumbing.md) -- wired FF/formula option/view options for the #133474 optimizer (PR #134754); field-number collision risk with unmerged ColumnPruning PR #134540
+- [SemiJoinPushdown view-diff results (GREAT-90)](great90-semijoin-pushdown-viewdiff-results.md) -- 4 prod diffs 2026-08-04/06: errors clean, but ~21 REAL row-loss diffs; how to tell real from noise
 - [Backlog dispatch change id (GREAT-79)](great79-backlog-change-id.md) -- stack to release stale backlog jobs only when DO doesn't know them; stamp-before-dispatch, cleared with the reservation (PRs #134830, #134839)
+- [Plan-to-SQL key promotion (GREAT-31)](great31-plan-to-sql-key-promotion.md) -- computed-column key promotion, not the case mismatch the ticket claims (PR #136284)
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
