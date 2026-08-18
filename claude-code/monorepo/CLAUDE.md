@@ -28,6 +28,22 @@ If you don't know the Jira ticket ID, ask the user.
 - PR body must start with a Jira ticket link: `[🎟️ - JIRA-ID](https://pigmentdev.atlassian.net/browse/JIRA-ID)`
 - PR titles must be prefixed with an emoji indicating the type of change (see `.claude/skills/create-pr/SKILL.md` for the full list)
 
+### Stacked PRs
+
+Use the `gh stack` extension (`gh extension install github/gh-stack`) for any chain of PRs where each one
+targets the branch below it. Do not hand-roll the cascade with `git rebase --onto` + per-branch
+`push --force-with-lease`.
+
+- `gh stack view` / `gh stack checkout` to see and move around a stack
+- `gh stack sync` after amending or rebasing any branch in the stack: it fetches, cascades the rebase over
+  every branch above it, pushes, and syncs the PR state in one command
+- `gh stack rebase` for the cascading rebase alone, `gh stack submit` to push and create/update the PRs
+- `gh stack link` to register PRs that already exist as a stack on GitHub
+
+GitHub only rebases downstream branches server-side when the *bottom* PR merges. A force-push to a lower
+branch does **not** propagate, so the branches above keep pointing at the pre-rewrite commit until the
+cascade is run locally.
+
 ## Code Organization
 
 - **One file per class/interface**: Each class, interface, or enum should be in its own file. Do not put multiple types in the same file unless they are closely related nested types.
