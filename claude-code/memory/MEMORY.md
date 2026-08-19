@@ -25,7 +25,7 @@
 - [Backlog dispatch change id (GREAT-79)](great79-backlog-change-id.md) -- stack to release stale backlog jobs only when DO doesn't know them; stamp-before-dispatch, cleared with the reservation (PRs #134830, #134839)
 - [Plan-to-SQL key promotion (GREAT-31)](great31-plan-to-sql-key-promotion.md) -- computed-column key promotion, not the case mismatch the ticket claims (PR #136284)
 - [BlankAccessUnionSplit vs Keolis views (GREAT-90)](great90-blank-access-split-vs-keolis-views.md) -- hot access join is INNER by construction; guard relaxed 2026-08-19 so the split now handles inner joins too
-- [Aurora scoped-execution wipe 2026-08-19](aurora-scoped-wipe-2026-08-19.md) -- scoped DQS 0-row wipe on Aurora; suspects #137205 join-pipes rewrite / #136678 BuildJoinIndexOnSmallerSide; blocked on PIGMENT_TOKEN for plan files
+- [Aurora scoped-execution wipe 2026-08-19](aurora-scoped-wipe-2026-08-19.md) -- RESOLVED: empty prior_versions modality set in scoped input loading scope rendered AND FALSE; scope-candidate incoherence, not an IMP join bug
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
