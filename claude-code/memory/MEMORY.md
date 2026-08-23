@@ -27,6 +27,8 @@
 - [BlankAccessUnionSplit vs Keolis views (GREAT-90)](great90-blank-access-split-vs-keolis-views.md) -- hot access join is INNER by construction; guard relaxed 2026-08-19 so the split now handles inner joins too
 - [Aurora scoped-execution wipe 2026-08-19](aurora-scoped-wipe-2026-08-19.md) -- RESOLVED: empty prior_versions modality set in scoped input loading scope rendered AND FALSE; scope-candidate incoherence, not an IMP join bug
 - [IDKids viewdiff root causes (GREAT)](great-idkids-viewdiff-root-causes.md) -- 4 clusters: no agg pushdown, blank/access OR blocks filter pushdown, IMP slot starvation, harness cold-cache artifact; plan retention ~2 weeks
+- [LeftJoin agg pushdown all-keys-bound (GREAT-90)](great90-leftjoin-agg-pushdown-all-keys-bound.md) -- optimizer enabled but correctly bailed: filter above join binds the last left key; appliedLogicalPlanOptimizations lists applied, not enabled
+- [CC resource_usage_cache pinned-xmin incident](cc-resource-usage-cache-pinned-xmin.md) -- ever-increasing SELECT max on production-eu1 = stuck idle-in-transaction backend since 2026-08-22 15:26 UTC pinning xmin -> table bloat, not a query regression
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
@@ -62,6 +64,7 @@
 - [Raw strings for multi-line [Description]](feedback_raw_string_description.md) - Use """ instead of " + " concatenation in NUnit test descriptions
 - [No --no-build when verifying new code](feedback_no_nobuild_when_verifying_new_code.md) - Clean-build before trusting tests; --no-build hides compile errors
 - [No optional parameters in production code](feedback_no_optional_params_in_production.md) - Require all args explicitly in production; optional params only in test Build<Service> helpers
+- [No non-executable IMP shapes in tests](feedback_no_nonexecutable_imp_shapes.md) - Test plans must be builder-realistic and runnable; no exclusion sets to skip execution suites
 
 ## Claude Config Backup
 - All `.claude` config files are stored in `~/Useful/claude-code/` and symlinked back to their original locations.
