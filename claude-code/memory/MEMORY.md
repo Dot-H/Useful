@@ -30,7 +30,7 @@
 - [LeftJoin agg pushdown all-keys-bound (GREAT-90)](great90-leftjoin-agg-pushdown-all-keys-bound.md) -- optimizer enabled but correctly bailed: filter above join binds the last left key; appliedLogicalPlanOptimizations lists applied, not enabled
 - [CC resource_usage_cache pinned-xmin incident](cc-resource-usage-cache-pinned-xmin.md) -- ever-increasing SELECT max on production-eu1 = stuck idle-in-transaction backend since 2026-08-22 15:26 UTC pinning xmin -> table bloat, not a query regression
 - [Immutable dependency graph (SCHED-646)](sched646-immutable-dependency-graph.md) -- CoW rewrite of PR #128786; version bumps at session OPEN (GraphVersionAtOpen); caching read sessions are per-session SNAPSHOTS (open a new session for fresh data); PostgresIntegration suite is the safety net
-- [Partial dependency graph cache (DG)](dg-partial-graph-cache-coverage.md) — region-by-region loading; coverage is LOCAL so traversals check every dataset; closure loop is C# not a CTE; empty-table EXPLAIN lies
+- [Partial dependency graph cache (DG)](dg-partial-graph-cache-coverage.md) -- region-by-region loading; coverage is LOCAL so traversals check every dataset; closure loop is C# not a CTE; empty-table EXPLAIN lies
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
@@ -38,7 +38,7 @@
 - `git push -u origin <branch>` fails in worktrees; use `git push origin HEAD:<branch>` instead.
 
 ## Feature Flags
-- Scheduling team's FF range: 50000-50025 used, next available from 50026.
+- Scheduling team's FF range: 50000-50083 used (verified 2026-08-25), next available from 50084. The range is pitted with `reserved` gaps, so read the proto rather than assuming.
 - FFs defined in `apps/Common/Pigment.Api/FeatureFlags/FeatureFlags.proto`.
 - Pattern: `FeatureFlag_Name = ID [(flagMetadata) = {services: "service_name", defaultStatus: FeatureFlagStatus_Disabled}];`
 - Access via `IFeatureFlagLookup.IsFlagEnabled(FeatureFlag.Name)` or `IFeatureFlagService.IsFlagEnabled(FeatureFlag.Name, orgId)`.
