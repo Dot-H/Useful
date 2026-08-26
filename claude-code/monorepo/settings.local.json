@@ -76,7 +76,6 @@
       "Bash(cp -r /Users/alexandrebernard/pigment_code/opensource/monorepo/.claude /Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/.claude)",
       "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/apps/EndToEndTesting/TestSuites/**)",
       "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo-fjc-testoptions/**)",
-      "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo/apps/DependencyOrchestrator* -type d)",
       "mcp__claude_ai_Notion__notion-create-pages",
       "mcp__claude_ai_Notion__notion-query-data-sources"
     ]

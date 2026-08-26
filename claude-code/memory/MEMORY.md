@@ -24,7 +24,7 @@
 - [SemiJoinPushdown view-diff results (GREAT-90)](great90-semijoin-pushdown-viewdiff-results.md) -- RESOLVED: only 4/77 diffs coincide with the optimizer applying; use @appliedLogicalPlanOptimizations joined on xTraceId, NOT `pushed-down ops`
 - [Backlog dispatch change id (GREAT-79)](great79-backlog-change-id.md) -- stack to release stale backlog jobs only when DO doesn't know them; stamp-before-dispatch, cleared with the reservation (PRs #134830, #134839)
 - [Plan-to-SQL key promotion (GREAT-31)](great31-plan-to-sql-key-promotion.md) -- computed-column key promotion, not the case mismatch the ticket claims (PR #136284)
-- [BlankAccessUnionSplit vs Keolis views (GREAT-90)](great90-blank-access-split-vs-keolis-views.md) -- hot access join is INNER by construction; guard relaxed 2026-08-19 so the split now handles inner joins too
+- [BlankAccessUnionSplit vs Keolis views (GREAT-90)](great90-blank-access-split-vs-keolis-views.md) -- hot access join is INNER by construction; inner joins supported + pipeline reordered (pushdown BEFORE the split) so it finally fires
 - [Aurora scoped-execution wipe 2026-08-19](aurora-scoped-wipe-2026-08-19.md) -- RESOLVED: empty prior_versions modality set in scoped input loading scope rendered AND FALSE; scope-candidate incoherence, not an IMP join bug
 - [IDKids viewdiff root causes (GREAT)](great-idkids-viewdiff-root-causes.md) -- 4 clusters: no agg pushdown, blank/access OR blocks filter pushdown, IMP slot starvation, harness cold-cache artifact; plan retention ~2 weeks
 - [LeftJoin agg pushdown all-keys-bound (GREAT-90)](great90-leftjoin-agg-pushdown-all-keys-bound.md) -- optimizer enabled but correctly bailed: filter above join binds the last left key; appliedLogicalPlanOptimizations lists applied, not enabled
