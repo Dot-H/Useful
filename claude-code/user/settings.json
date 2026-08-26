@@ -72,5 +72,6 @@
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "latest",
-  "minimumVersion": "2.1.210"
+  "minimumVersion": "2.1.210",
+  "tui": "fullscreen"
 }
