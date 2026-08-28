@@ -30,7 +30,9 @@
 - [LeftJoin agg pushdown all-keys-bound (GREAT-90)](great90-leftjoin-agg-pushdown-all-keys-bound.md) -- optimizer enabled but correctly bailed: filter above join binds the last left key; appliedLogicalPlanOptimizations lists applied, not enabled
 - [CC resource_usage_cache pinned-xmin incident](cc-resource-usage-cache-pinned-xmin.md) -- ever-increasing SELECT max on production-eu1 = stuck idle-in-transaction backend since 2026-08-22 15:26 UTC pinning xmin -> table bloat, not a query regression
 - [Immutable dependency graph (SCHED-646)](sched646-immutable-dependency-graph.md) -- CoW rewrite of PR #128786; version bumps at session OPEN (GraphVersionAtOpen); caching read sessions are per-session SNAPSHOTS (open a new session for fresh data); PostgresIntegration suite is the safety net
+- [Graphite warmed-dataset alert](graphite-warmed-dataset-alert.md) -- datasets just over the 10M list-view pushdown threshold force SQL, which temp-warms the whole cold dataset on every request
 - [Partial dependency graph cache (DG)](dg-partial-graph-cache-coverage.md) -- region-by-region loading; coverage is LOCAL so traversals check every dataset; closure loop is C# not a CTE; empty-table EXPLAIN lies
+- [BlankAccessUnionSplit view wiring (GREAT-49)](great49-blank-access-view-wiring.md) -- optimizer had FF+RQC field but no view-path FF check/proto override; fixed PR #139210, mirrors ColumnPruning pattern
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
