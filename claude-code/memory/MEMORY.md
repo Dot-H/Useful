@@ -34,7 +34,7 @@
 - [Partial dependency graph cache (DG)](dg-partial-graph-cache-coverage.md) -- region-by-region loading; coverage is LOCAL so traversals check every dataset; closure loop is C# not a CTE; empty-table EXPLAIN lies
 - [BlankAccessUnionSplit view wiring (GREAT-49)](great49-blank-access-view-wiring.md) -- optimizer had FF+RQC field but no view-path FF check/proto override; fixed PR #139210, mirrors ColumnPruning pattern
 - [Early truncation fetch flags (GREAT-49)](great49-early-truncation-fetch-flags.md) -- PR #139252; ViewContext.PrefetchedDatasetIds, because a second prefetch returns [] once everything is cached
-- [ColumnPruning viewdiff results (GREAT-90)](great90-column-pruning-viewdiff-results.md) -- ROLL OUT: 0.045% diff rate vs 0.112% no-op baseline, 0 test-only DataLimitReached, timing neutral (88.6% of excess is slot wait); the no-op population IS the control group
+- [ColumnPruning viewdiff results (GREAT-90)](great90-column-pruning-viewdiff-results.md) -- ROLL OUT: 0.045% diff rate vs 0.112% no-op baseline, 0 test-only DataLimitReached, timing neutral with NO measurable win (fetched values identical in 90,600/90,686); no-op population IS the control group; never sum [STATS] session rows per branch
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
