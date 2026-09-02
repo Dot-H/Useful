@@ -71,6 +71,11 @@
     "datadog@claude-plugins-official": true
   },
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "medium"
+    }
+  },
   "autoUpdatesChannel": "latest",
   "minimumVersion": "2.1.210",
   "tui": "fullscreen"
