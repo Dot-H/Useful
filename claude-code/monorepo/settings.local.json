@@ -1,4 +1,16 @@
 {
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "toner agent-plugins check \u003e/dev/null 2\u003e\u00261 \u0026\u0026 printf '%s' '{\"systemMessage\":\"Pigment agent plugins are in sync.\"}' || printf '%s' '{\"systemMessage\":\"Pigment agent plugins are out of sync. Run: toner agent-plugins sync (if that command is unknown, run: toner self-update first).\"}'"
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "Bash(dotnet test:*)",
@@ -52,7 +64,7 @@
       "Skill(new-migration)",
       "Bash(dotnet --version)",
       "Bash(dotnet sdk:*)",
-      "Bash(FILE='/private/tmp/DependencyOrchestrator.Test__ccita-b9e10e72-330e-5968-9e34-fd4e30250140-8ad4ma_2026-03-27_09_50_05.xml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Checksum-Mode=ENABLED&X-Amz-Credential=ASIAQVFQINEOFPPMDGRG%2F20260327%2Fus-east-1%2Fs3%2Faws4')",
+      "Bash(FILE='/private/tmp/DependencyOrchestrator.Test__ccita-b9e10e72-330e-5968-9e34-fd4e30250140-8ad4ma_2026-03-27_09_50_05.xml?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Checksum-Mode=ENABLED\u0026X-Amz-Credential=ASIAQVFQINEOFPPMDGRG%2F20260327%2Fus-east-1%2Fs3%2Faws4')",
       "Read(//Users/alexandrebernard/pigment_code/opensource/monorepo/**)",
       "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo -name *GlobalConfiguration* -type f)",
       "Bash(find /Users/alexandrebernard/pigment_code/opensource/monorepo -name *ChangeToCompleteBacklog*.cs -type f)",

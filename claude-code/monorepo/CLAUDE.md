@@ -3,7 +3,8 @@
 ## General Rules
 
 - **Never mention Claude**: Do not mention Claude, AI, or any AI assistant in commits, PR descriptions, code comments, co-author lines, or any other artifacts. Keep all contributions anonymous.
-- **ASCII-only in written artifacts**: Never use special Unicode arrows (`←`, `→`, `↑`, `↓`), dashes (`—`, `–`), or other non-ASCII symbols in code, comments, commit messages, PR descriptions, or markdown files. Use ASCII equivalents instead: `<-`, `->`, `--`, `...`, etc.
+- **ASCII-only in written artifacts**: Never use special Unicode arrows (`←`, `→`, `↑`, `↓`), dashes (`—`, `–`), or other non-ASCII symbols in code, comments, commit messages, PR descriptions, or markdown files. Use ASCII equivalents instead: `<-`, `->`, `...`, etc.
+- **No `--` as punctuation**: Never use `--` to set off a clause or stand in for an em dash. Rewrite with a comma, a colon, parentheses, or two sentences.
 
 ## Swagger
 
@@ -68,6 +69,8 @@ cascade is run locally.
 - **Never inline `if` statements**: Never write `if (cond) DoSomething();` on a single line. Always put the body on its own line. Use braces when the condition or the body spans multiple lines; omit braces when both fit on a single line each.
 - **Use `UnreachableSwitchCaseException` for exhaustive switches**: When switching over an enum (or boolean/tuple/type hierarchy), throw `UnreachableSwitchCaseException` from `Pigment.Common.System` in the default case rather than `ArgumentOutOfRangeException`. The analyzer leverages it to verify all enum values (or derived types) are handled. Use `UnreachableSwitchCaseException<T>` when switching over a type hierarchy.
 - **No optional parameters in production code**: Do not use optional (default-valued) parameters in production method signatures. Every caller must be explicit about what they pass. Optional parameters are allowed in test helpers (e.g., `Build<Service>` factory methods) where they serve as "don't care" defaults.
+- **Keep comments short**: Write the minimum a reader needs. No essays, no restating the code, no recapping the whole design in every comment.
+- **Keep implementation details out of method summaries**: A doc comment says what the method does and what the caller must know (contract, invariants, gotchas). Why a specific line is written that way belongs in an inline comment next to that line, not in the summary.
 
 ## DataDog Metrics (OpenTelemetry)
 
