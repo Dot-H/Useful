@@ -57,44 +57,50 @@ rows on effort and fetched-value ratios rather than wall clock. See
 Related: [[great90-blank-access-split-vs-keolis-views]],
 [[great49-blank-access-view-wiring]], [[great90-column-pruning-viewdiff-results]].
 
-**2026-09-08 root-cause pass on the regression families (Notion section 4, block
-`5e27d427fb434ffba2632984659fad9f`).** Pulled the live `[ViewDiff] Result` lines for one
-trace per case:
+**2026-09-08 root-cause pass on the regression families (Notion section 4).** An earlier
+version of this note blamed "loss of SQL pushdown"; that was WRONG: the traces I first
+pulled were viewDiffId `92bb0ce0` "(SQL + IMP) vs Full IMP", not the BlankBypass diffs.
+`PushDownExecutionToStorage` is a per-query flag set by the view layer from cardinality
+thresholds before any logical optimizer runs; in the split-only diffs both branches have
+0 pushed-down ops. Always filter on `@viewDiffId` -- several diffs share one `@xTraceId`.
 
-| Case | refPushedDownOps | testPushedDownOps | refShards | testShards |
-|---|---|---|---|---|
-| THM Media `47be56ea` (fetch-inflation regression) | 1/12 | **0/14** | 1 | 2 |
-| ServiceNow `80148d08` (duplicated-scan regression) | 2/34 | **0/34** | 1 | 8 |
-| Newell Brands `44ee2888` (flagship win) | 0/8 | 0/5 or 0/8 | 2 | 1-2 |
+**ServiceNow `80148d08` ("duplicated scan", 10-14x effort) is a STORAGE-LATENCY
+ARTIFACT, not the optimizer.** Trace `d798f1ac9bd7a840`: the split touched one 24-row,
+45 ms `_month` dimension query; per shard, ref and test have identical `totalEffort`,
+`downloadCells`, `downloadsCount=13`, `joinSteps`, but `downloadDuration` 3,100-5,000 ms
+vs ~100 ms (same hosts, 6 s apart). The Notion "effort" metric (compute+download *ms*)
+is NOT artifact-immune; the unit-less `totalEffort` / "execution effort (sum across
+shards)" in `[STATS] Distributed query session` is. 2 of 4 runs regressed = cache luck.
 
-**Working hypothesis, 3 data points, not yet validated at scale:** the split regresses
-specifically when the *unsplit* plan already enjoyed nonzero SQL pushdown. The rewrite's
-`UnionAllOperation` of two cloned joins (`BuildRealBranchJoin`/`BuildBlankBranchJoin`,
-`BlankAccessUnionSplitOptimizer.cs:255-280`) is evidently not recognized by the SQL
-compilation eligibility check as a single pushable unit the way the original
-`Filter(Join)` was, so the whole query falls back to full per-op IMP execution (shard
-count goes up, pushed-down ops drops to 0) -- wiping out whatever the branch split was
-supposed to save, and this reads as EITHER "duplicated scan" (effort multiplies, same
-fetched values -- ServiceNow, Palo Alto `1d3b2d6f`, JULES `3e800bae`) or "fetch
-inflation" (IMP now materializes more intermediate values from the un-pushed join --
-THM Media, Keolis `89a886c7`, SNCF Reseau `583fa50e`) depending on how selective the
-branches are. Newell/Palo Alto `376734b1` win because their ref plan had ZERO pushdown
-to begin with (0/8) -- nothing to lose, and the split's pure IMP-side row reduction on
-the real branch is a clean gain.
+**THM Media `47be56ea` ("fetch inflation", wall x3) IS the optimizer, but second-order.**
+Trace `f12d56f4383b5b73`, main 200 KB `ExecuteToDataset` (485 rows): ref 2 shards on
+`_location`, ~6 s; test (`BlankAccessUnionSplit` applied) **4 shards on `acct_pl`**,
+19.7 s; execution effort sum identical (1.67-1.79M vs 1.76M), slot acquisition ~7 ms in
+both. The bigger plan (physical Union 17 -> 89, Remote Query 842 -> 2,412, Lazy Filter
+16 -> 340, every node < 30 ms actual) pushes `ShardingSchemeSelector` past the 2-shard
+CPU threshold (options: 1 shard <= 1 s, 2 <= 2 s, 4 <= 4 s CPU estimate); 4 shards then
+doubles shuffles (575 -> 1,135), broadcast dataset loads (per-dataset rows x2, e.g.
+282 -> 1,128 = the +48% fetched values), memory HWM (53 -> 104 MB) and round trips,
+parallelism 0.03. Plan files: ref `query-plans/drqc/01a0685b-6094-77f0-8382-184b943096d0.json`
+(queryId `01a0685b-6c79-7a7d-b601-72171510d5a8`), test
+`query-plans/drqc/01a0685b-9f8a-77a8-990b-00ebd6e89875.json` (queryId
+`01a0685b-ba7d-7a4e-ac4c-35051ca87259`), namespace `production-us1`.
 
-**Nested-filter multiplier, unverified:** `VisitFilter`/`TrySplit` self-applies at every
-stacked access-filter level in one walk (`:72-77`), each doubling the subtree below it.
-2-4 stacked levels would give 2x-16x duplicated effort, which matches the observed
-3.2x-14.1x range on the duplicated-scan cases better than a single doubling would.
-Not confirmed against an actual plan tree (would need `get-query-plan` on a still-live
-trace; the two example traces re-fetched this session had already aged out of the
-specific run analyzed in the Notion doc, so this is inferred from magnitude, not from a
-plan JSON).
+**Why FilterPushdown does not save it:** the blank operands are
+`expandedQuery.tableOrMetricQuery__time_period_type_B9KE25 / __version_9DRQHD = empty`,
+i.e. columns of a materializing join/aggregate layer, not of a dataset scan. Of the 421
+empty-GUID filters in the test plan, 1 sits on a `Dataset Load`, 280 on `Nested Loop`,
+28 on `Hash Join`, 112 on `Dataset Reference` (ref: 14/14/14). The partition predicate
+cannot become a storage scope, so each branch re-executes the whole subtree, times 2^N
+for stacked levels. And Branch B is EMPTY in every union (`Lazy Filter:0` children):
+there are no blank rows, so there was nothing to gain.
 
-**Possible fix, not yet implemented:** a precondition on `TrySplit` (or on the SQL
-compilation eligibility check) that declines the split -- or falls back cleanly -- when
-the original `Filter(Join)` was going to compile into a pushed-down SQL fragment, since
-in every observed regression the split cost was "lose the pushdown you had", not "the
-partition predicate failed to reach the scan" per the code's own comment at `:139-148`.
-Matches Notion recommendation #4 ("add a cost guard") but narrows it to a checkable
-signal (pre-split pushdown eligibility) rather than a generic cardinality guard.
+**Fix directions (none implemented):** (1) precondition: base source must be a
+`DatasetScanOperation` (through Filter/Project/Reindex) whose blank column is a physical
+column, so the complement/gate become loading scopes; (2) cardinality guard via the
+`CardinalityEstimator` already handed to `LogicalPlanOptimizer`: skip when the blank
+fraction is ~0 (or better, collapse `(blank OR match)` to `match` outright); (3) when the
+base is materializing, share it through a session CTE instead of cloning (nothing to
+lose there, the doc's anti-CTE argument only holds for scans); (4) cap stacked depth;
+(5) upstream: Workspace already folds the list-view blank bypass to `FALSE OR (...)`,
+do the same for tables when the dimension has no blank member.
