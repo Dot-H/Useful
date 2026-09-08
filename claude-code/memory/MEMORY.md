@@ -37,6 +37,7 @@
 - [ColumnPruning viewdiff results (GREAT-90)](great90-column-pruning-viewdiff-results.md) -- ROLL OUT: 0.045% diff rate vs 0.112% no-op baseline, 0 test-only DataLimitReached, timing neutral with NO measurable win (fetched values identical in 90,600/90,686); no-op population IS the control group; never sum [STATS] session rows per branch
 - [View-diff perf pairing method (GREAT-49)](great49-viewdiff-perf-pairing-method.md) -- pair on (xTraceId, queryTextSize, rowCount); logged SQL is the INPUT query; opts are per-query not per-trace; ~400x noise floor, one run only
 - [BlankAccessUnionSplit viewdiff verdict (GREAT-90)](great90-blank-split-viewdiff-2026-09-08.md) -- never fires on Lists (0/6,026 traces, no blank operand left in list SQL); on Tables -16.7% effort but +27ms/run latency and +12.8% fetched values; both Lists headline numbers are artifacts
+- [InnerJoinToSemiJoin + pushdown viewdiff regression (GREAT-90)](great90-semijoin-pushdown-viewdiff-regression.md) -- semi-join alone is neutral; semiJoinPushdownOverride regresses 5x on Lists, no cardinality guard turns a ~1K-row probe into a 32.3M-value scan
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
