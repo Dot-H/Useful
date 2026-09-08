@@ -126,3 +126,31 @@ base is materializing, share it through a session CTE instead of cloning (nothin
 lose there, the doc's anti-CTE argument only holds for scans); (4) cap stacked depth;
 (5) upstream: Workspace already folds the list-view blank bypass to `FALSE OR (...)`,
 do the same for tables when the dimension has no blank member.
+
+**Guard (1) "base is a scan" does NOT fix the worst offenders (checked on their plans,
+2026-09-08).** THM is the ONLY offender with a materializing base. Palo Alto `1d3b2d6f`
+(+22% unit-less effort; plan ExclusiveEffort 1.84M vs 1.17M), SNCF `583fa50e` (+7.5%;
+18.96M vs 17.51M) and Keolis `89a886c7` (+8%; 141k vs 89k) all split over a dataset
+scan, and the partition predicates DID reach the scan (`Dataset Reference` children =
+the scan's session CTE). They regress anyway, via two mechanisms:
+- Palo Alto / SNCF (and Ledger, the lone -2% "win"): Branch B yields 0 rows in every
+  split union (`Lazy Filter:0`), so the split filters + joins the base twice for nothing
+  (Palo Alto blank subtree alone = 37% of the ref plan's effort; the 20,447-row dimension
+  CTE is read 4x instead of 2x). Guard (2) would catch these; guard (1) would not.
+- Keolis: Branch B is NOT empty (7 of 234 rows), so guard (2) misses it too. Its cost is
+  SCOPE LOSS through `MultiScanAsSessionCteOptimizer`: the two cloned base scans are
+  merged into one session CTE with the UNION of their scopes; Branch B's gate
+  `(project_dev = empty OR scenario = empty)` spans two columns and is not a loading
+  scope, so the merged CTE is loaded unrestricted (`InitPlan`, no predicate): f754fea3
+  646 rows vs 50 in ref (ref scan carried `scenario IN (empty, X)`), 590a20b3 62 vs 1.
+  That is the +31% fetched values at a constant 1 shard. Checkable precondition: the
+  blank gate (and each branch's pushed predicate) must be scope-convertible
+  (`DatasetLoadOptimizer.InferDatasetLoadingScopesFromField` exact) -- in practice a
+  single blank column; refuse multi-column gates.
+- Everywhere: the split's own doc assumption ("each branch reads its own copy with its
+  own pushed predicate") is violated in production because `UseMultiScanAsSessionCte`
+  runs AFTER the optimizer (`DistributedRemoteQueryContext.cs:2266`) and folds the two
+  copies back into one CTE that is then filtered twice.
+Ledger's -2% comes from 8 -> 4 shards (same sharding channel, lucky direction).
+Plan files in scratchpad naming: paloalto/sncf/keolis/ledger `_ref`/`_test`; Keolis,
+SNCF, Ledger orgs are namespace `production`, THM/ServiceNow/Palo Alto `production-us1`.
