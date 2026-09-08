@@ -1,6 +1,6 @@
 ---
 name: great90-blank-split-viewdiff-2026-09-08
-description: BlankAccessUnionSplit view-diff verdict (2026-09-03/07) - never fires on Lists; on Tables it is -16.7% effort but +27ms/run latency and +12.8% fetched values
+description: BlankAccessUnionSplit view-diff verdict (2026-09-03/07) - never fires on Lists; on Tables it regresses every metric, and the -16.7% "effort win" was a milliseconds artifact (+4.6% on unit-less effort)
 metadata: 
   node_type: memory
   type: project
@@ -27,19 +27,41 @@ byte-identical fetched values / memory HWM / pushdown ratio on both branches), a
 to 700,000x, e.g. Valeo 125 -> 87.7 M values).
 
 **Isolated verdict on Tables** (split-only config, its own no-op population as control):
-effort (compute+download) **-16.68%** vs -2.95% control, but wall **+1.99% median /
-+11.27% aggregate** vs +0.05% control, fetched values **+12.82%** vs -0.21%, and
-body-only wall delta +27 ms/run vs +0.2 ms/run. SQL text p95 81,661 B vs 44,815 B
-(+82%) with statement count unchanged -> bigger single queries, not more round trips.
+wall **+1.99% median / +11.27% aggregate** vs +0.05% control, fetched values **+12.82%**
+vs -0.21%, body-only wall delta +27 ms/run vs +0.2 ms/run, SQL text p95 72,426 B vs
+22,704 B for all ref statements with statement count unchanged (-0.2%) -> bigger single
+queries, not more round trips.
 
-Real wins (reproducible, work-validated): Newell Brands `44ee2888` (-43% fetched on
-8/8 runs, ~3x less effort, median -10.7%), Palo Alto `376734b1` (same rows, up to 9.3x
-less effort, best run -71.3%), Ledger `e9795b63`, Vinted `4733a9ea`.
+**THE -16.7% "EFFORT WIN" IS DEAD (2026-09-08 re-measurement).** `compute+download` is
+in MILLISECONDS and follows storage download latency; it manufactured wins AND losses.
+Re-run on the unit-less `@executionEffortSum` (`[STATS] Distributed query session`),
+summed per `@xTraceId` over DISTINCT `@distributedSessionId` (MAX per session id, to
+collapse Datadog double-indexing), warmups excluded, keeping only traces with equal
+ref/test session counts: **split population +4.60%** (5,086 traces, 3,317 up vs 1,769
+down) against a control of **-0.07%** (11,240 traces, 4,361 down vs 4,281 up). Also:
+ZERO split traces have equal effort on both branches vs 2,598 flat control traces, so
+the rewrite changes real work nearly everywhere it fires, net negative. Every surviving
+metric now points the same way: on Tables this optimizer is a regression.
 
-Real regressions, two families: **fetch inflation** (THM Media `47be56ea`, +42-51%
-fetched on 3/3 runs, wall +173-231%; also Keolis `89a886c7` +31%, SNCF Reseau
-`583fa50e` +35%) and **duplicated scan** (ServiceNow `80148d08`, identical output but
-10-14x effort; also ServiceNow `9dbfdbbc`, JULES `3e800bae`, Palo Alto `1d3b2d6f`).
+Per-view, ms effort vs unit-less effort (the two disagree constantly):
+Newell `44ee2888` -65.7% / **+0.5%**; Palo Alto `376734b1` -53.7% / **+20.8%**;
+Vinted `4733a9ea` -62.7% / -0.5%; Ledger `e9795b63` -60.0% / -2.2% (only real win);
+ServiceNow `80148d08` +807.8% / **+0.04%**; ServiceNow `9dbfdbbc` +224.0% / +0.03%;
+JULES `3e800bae` +259.1% / -0.2%; Morrisons `af3531ca` +100.3% / -3.2%;
+THM `47be56ea` +54.9% / +4.7%; SNCF Reseau `583fa50e` +97.8% / +7.5%;
+Keolis `89a886c7` -32.4% / **+8.2%**; Palo Alto `1d3b2d6f` +319.9% / +22.2%.
+So the §3 "wins" (Newell, Palo Alto `376734b1`, Vinted) are retired, and the §4
+"duplicated scan" family (both ServiceNow views, JULES, Morrisons) is retired too. Real
+regressions on real work: Palo Alto `1d3b2d6f`, Keolis, SNCF Reseau, THM. NO material win.
+
+**Shard count is a real but MINORITY channel.** `@refShardCount`/`@testShardCount` on
+the `[ViewDiff] Result` line: rises on 146 of 5,097 split runs, falls on 23 (control:
+1 and 0), net +2.9%. THM `47be56ea` and SNCF `583fa50e` do go 2 -> 4 shards every run
+(confirms the broadcast-reload mechanism), Newell goes 2 -> 1 (which is where its
+download-time win comes from). BUT Keolis `89a886c7` stays at 1 shard on all 17 runs and
+still fetches +31%, and population-wide only 68 of the 292 runs that fetch >10% extra
+also increase shard count, against 223 with an IDENTICAL shard count. Do not generalise
+fetch inflation to a shard-count symptom.
 
 Discarded as artifacts, and they nearly cancel: Sponda `5d8eb121` (-132,905 ms, effort
 and fetch unchanged) and Valeo `0fa1f4de` (+148,748 ms, median -7.2%, effort DOWN).
