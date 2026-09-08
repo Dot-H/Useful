@@ -75,6 +75,7 @@
 - [No --no-build when verifying new code](feedback_no_nobuild_when_verifying_new_code.md) - Clean-build before trusting tests; --no-build hides compile errors
 - [No optional parameters in production code](feedback_no_optional_params_in_production.md) - Require all args explicitly in production; optional params only in test Build<Service> helpers
 - [No non-executable IMP shapes in tests](feedback_no_nonexecutable_imp_shapes.md) - Test plans must be builder-realistic and runnable; no exclusion sets to skip execution suites
+- [Object assertions: Is.EqualTo / IsPigment.DeepEqualTo](feedback_object_assert_equalto_deepequal.md) - Assert whole objects with Is.EqualTo, or IsPigment.DeepEqualTo if that doesn't work
 
 ## Claude Config Backup
 - All `.claude` config files are stored in `~/Useful/claude-code/` and symlinked back to their original locations.
