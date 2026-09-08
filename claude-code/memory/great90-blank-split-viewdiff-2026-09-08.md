@@ -56,3 +56,45 @@ rows on effort and fetched-value ratios rather than wall clock. See
 "DDSQL mechanics" sections of `tools/agent-plugins/skills/investigate-view-diff/references/fields.md`.
 Related: [[great90-blank-access-split-vs-keolis-views]],
 [[great49-blank-access-view-wiring]], [[great90-column-pruning-viewdiff-results]].
+
+**2026-09-08 root-cause pass on the regression families (Notion section 4, block
+`5e27d427fb434ffba2632984659fad9f`).** Pulled the live `[ViewDiff] Result` lines for one
+trace per case:
+
+| Case | refPushedDownOps | testPushedDownOps | refShards | testShards |
+|---|---|---|---|---|
+| THM Media `47be56ea` (fetch-inflation regression) | 1/12 | **0/14** | 1 | 2 |
+| ServiceNow `80148d08` (duplicated-scan regression) | 2/34 | **0/34** | 1 | 8 |
+| Newell Brands `44ee2888` (flagship win) | 0/8 | 0/5 or 0/8 | 2 | 1-2 |
+
+**Working hypothesis, 3 data points, not yet validated at scale:** the split regresses
+specifically when the *unsplit* plan already enjoyed nonzero SQL pushdown. The rewrite's
+`UnionAllOperation` of two cloned joins (`BuildRealBranchJoin`/`BuildBlankBranchJoin`,
+`BlankAccessUnionSplitOptimizer.cs:255-280`) is evidently not recognized by the SQL
+compilation eligibility check as a single pushable unit the way the original
+`Filter(Join)` was, so the whole query falls back to full per-op IMP execution (shard
+count goes up, pushed-down ops drops to 0) -- wiping out whatever the branch split was
+supposed to save, and this reads as EITHER "duplicated scan" (effort multiplies, same
+fetched values -- ServiceNow, Palo Alto `1d3b2d6f`, JULES `3e800bae`) or "fetch
+inflation" (IMP now materializes more intermediate values from the un-pushed join --
+THM Media, Keolis `89a886c7`, SNCF Reseau `583fa50e`) depending on how selective the
+branches are. Newell/Palo Alto `376734b1` win because their ref plan had ZERO pushdown
+to begin with (0/8) -- nothing to lose, and the split's pure IMP-side row reduction on
+the real branch is a clean gain.
+
+**Nested-filter multiplier, unverified:** `VisitFilter`/`TrySplit` self-applies at every
+stacked access-filter level in one walk (`:72-77`), each doubling the subtree below it.
+2-4 stacked levels would give 2x-16x duplicated effort, which matches the observed
+3.2x-14.1x range on the duplicated-scan cases better than a single doubling would.
+Not confirmed against an actual plan tree (would need `get-query-plan` on a still-live
+trace; the two example traces re-fetched this session had already aged out of the
+specific run analyzed in the Notion doc, so this is inferred from magnitude, not from a
+plan JSON).
+
+**Possible fix, not yet implemented:** a precondition on `TrySplit` (or on the SQL
+compilation eligibility check) that declines the split -- or falls back cleanly -- when
+the original `Filter(Join)` was going to compile into a pushed-down SQL fragment, since
+in every observed regression the split cost was "lose the pushdown you had", not "the
+partition predicate failed to reach the scan" per the code's own comment at `:139-148`.
+Matches Notion recommendation #4 ("add a cost guard") but narrows it to a checkable
+signal (pre-split pushdown eligibility) rather than a generic cardinality guard.
