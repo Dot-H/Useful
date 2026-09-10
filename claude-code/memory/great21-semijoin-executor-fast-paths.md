@@ -21,11 +21,11 @@ zero-binding semi-join (`_user = <uuid>` is a branch-local restriction, so `Bind
   folds 1-row inputs into constants: `ScalarJoinPlan`, no probe)
 
 Fix, executor-side, two stacked PRs under GREAT-21 (user chose the ticket; not GREAT-90):
-- PR 1 `alex/great-21/semijoin-existence-gate`: zero-binding semi-join = existence gate, base first,
+- PR 1 #141131 `alex/great-21/semijoin-existence-gate` (worktree ../monorepo-great-21-semijoin): zero-binding semi-join = existence gate, base first,
   skip the probe when the base is empty, forward the base `ImpResult` untouched (grant lazy filters only
   when the parent granted them, `ProcessSingleNonScalarSourceJoin` rule), `Strategy` field on
   `SemiJoinQueryPlan`; plus empty-base guard on the bound path.
-- PR 2 `alex/great-21/semijoin-base-lazy-filter`: `AllowLazyFilters` on the base of bound semi-joins,
+- PR 2 #141138 (stack #141139) `alex/great-21/semijoin-base-lazy-filter`: `AllowLazyFilters` on the base of bound semi-joins,
   predicate folded into `ApplySemiJoin` via `LazyFilter.MatchesAll`.
 
 **Why**: with zero bindings the filter result cannot narrow the base load (empty remapping yields a
@@ -40,3 +40,8 @@ assert `Is.SameAs(base data)` instead. Plan file:
 
 See [[great90-semijoin-pushdown-viewdiff-regression]] (Phase B, fixed by PR #140868),
 [[great-90-semijoin-pushdown-optimizer]], [[great90-imp-executor-side-binding-limit]].
+
+Gotcha found while testing: `ProcessSemiJoinOperationAsync` used the static `ProcessOperationAsync`, so
+`InjectableProcessor` never reached a semi-join's children and no direct `VisitSemiJoin` test could exist.
+PR 1 routes semi-join children through `OperationProcessor.SubProcessor` like `VisitJoin` (behaviour-neutral
+in production, full Unit suite green: 19,538 passed).
