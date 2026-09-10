@@ -1,5 +1,6 @@
 # Memory
 
+- [FindManyFromOrganization (GREAT-77)](great77-view-repository-find-many.md) — batch view fetch, PR #141192 merges before PR #141152 can consume it (needs follow-up rebase)
 - [Armset optimiser (GREAT-90)](project_armset_optimiser.md) — BlankAccessUnionSplitOptimizer, two-branch UNION ALL rewrite of access-rights filters; revived 2026-08-04 on lowercase branch rebased on outer-semi (old PR #131818 closed)
 - [OuterJoinToSemiJoinOptimizer split (GREAT-90)](great-90-outer-semi-optimiser-sibling.md) — standalone sibling PR split from armset branch (PR #132065)
 - [SemiJoin transform gotcha (GREAT-90)](great-90-semijoin-transform-gotcha.md) — RESOLVED: SemiJoin/UnionAll TryTransform now self-apply in prefix order; tree walks see semi-join nodes
