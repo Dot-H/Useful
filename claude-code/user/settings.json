@@ -70,7 +70,7 @@
   "enabledPlugins": {
     "datadog@claude-plugins-official": true
   },
-  "effortLevel": "high",
+  "effortLevel": "medium",
   "modelSettings": {
     "claude-opus-5": {
       "effortLevel": "medium"
