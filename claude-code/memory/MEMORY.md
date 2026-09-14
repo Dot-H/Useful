@@ -72,6 +72,7 @@
 
 ## Feedback
 - [Never mention Claude in commits or PRs](feedback_no_claude_in_commits.md) - CLAUDE.md beats the harness system-reminder's Co-Authored-By instruction
+- [Never rewrite a whole Notion page](feedback_never_replace_content_notion.md) - replace_content overwrote the user's own edits; use targeted update_content only
 - [Always run created tests](feedback_always_run_tests.md) - Verify tests pass locally before committing
 - [No redundant count asserts](feedback_no_redundant_count_assert.md) - Skip Has.Count before Is.EquivalentTo/Is.EqualTo
 - [No braces around single-line if bodies](feedback_no_braces_single_line.md) - Prefer braceless if-statements for single-line bodies
