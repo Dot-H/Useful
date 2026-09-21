@@ -72,6 +72,13 @@ cascade is run locally.
 - **Keep comments short**: Write the minimum a reader needs. No essays, no restating the code, no recapping the whole design in every comment.
 - **Keep implementation details out of method summaries**: A doc comment says what the method does and what the caller must know (contract, invariants, gotchas). Why a specific line is written that way belongs in an inline comment next to that line, not in the summary.
 
+## Query Plans and View Performance
+
+- **Always link the `planViewerLink`**: Whenever you mention a query plan, or discuss the performance of a view or a query, link the plan so the reader can open it. Paste the `@planViewerLink` value of the statement row verbatim as the URL of a markdown link (`[test plan](https://localhost:49378/plan-viewer?queryId=...)`). Never cite a plan as a bare file path or a bare `queryId`, and never describe plan behaviour without a link to the plan you are describing. The `localhost` host is intentional: the plan viewer runs locally against the same `GetQueryPlan` endpoint that `~/bin/get-query-plan.sh` calls.
+- **Link both sides of a comparison**: When comparing two branches, two runs, or a before and an after, link a plan for each side, and say which statement each link points at (the slowest statement of the request is usually the right choice).
+- **Find the link**: `@planViewerLink` lives on `service:compute-api` `FetchQueryAsync` / `FetchQueryRowLocal` rows. Filter `@planViewerLink:*query-plans*` to skip plain SQL statements that have no plan. A DRQC plan (`query-plans/drqc/...`) embeds every IMP sub-plan inline, so one link per branch is enough.
+- **A plan root's time is summed across shards, not wall clock**: Never quote the root `Actual Total Time` of a sharded plan as a latency figure. Take wall time from the `FetchQueryAsync` row.
+
 ## DataDog Metrics (OpenTelemetry)
 
 Metrics should be implemented using OpenTelemetry via the dotnet built-in API (not Prometheus).
