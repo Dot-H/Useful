@@ -43,6 +43,7 @@
 - [adding-compute-execution-option skill](adding-compute-execution-option-skill.md) -- pool skill for the full FF + formula option + ImpExecutionOptions + ViewDiff override wiring in Compute (PR #141610)
 - [InnerJoinToSemiJoin + pushdown viewdiff regression (GREAT-90)](great90-semijoin-pushdown-viewdiff-regression.md) -- RESOLVED (PR #140868) + 2026-09-17 re-run: correctness/failures clean; the WIN is SHARDING (semi-join preserves base keys, a join drops side-bound ones), -58% p50 on the 1.5% of statements that shard more; KEEP the pushdown (15.5% vs 2.41% multi-shard); request-level medians hide it
 - [BlankAccessUnionSplit viewdiff 2026-09-21 (GREAT-90)](great90-blank-split-viewdiff-2026-09-21.md) -- RemapColumns spliced `_blank` at the wrong `__` boundary, 71 test-only crashes across 24 orgs, 0 on ref (FIXED, PR #142765); correctness clean (whole-config rate mid-pack vs peer Tables configs); perf net negative but 8.9% of runs carry 98% of the download regression; failures must NEVER be split on the applied flag, it is empty when test fails
+- [BlankAccessUnionSplit shared-CTE fallback (GREAT-90)](great90-blank-split-cte-fallback.md) -- draft PR #142770, structural ShouldUseSharedCte/IsPushdownFriendlyBase guard (not cardinality-based, estimator can't price a filter over a join); verified build+64+43+4 new tests pass; SNCF trace confirmed 160 vs 80 shards for identical rows
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
