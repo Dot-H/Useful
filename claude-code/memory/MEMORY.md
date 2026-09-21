@@ -42,6 +42,7 @@
 - [Semi-join executor fast paths (GREAT-21)](great21-semijoin-executor-fast-paths.md) -- Phase A "slower semi-join" is expected: zero-binding 1-row ARM gate hits 3 executor gaps (no lazy filter on base, probe-first, row copy); fix = existence gate + empty-base (PR 1) and base lazy filter (PR 2), started 2026-09-10; all gated by one shared SemiJoinExecutorFastPaths option (#141607), stack #141608
 - [adding-compute-execution-option skill](adding-compute-execution-option-skill.md) -- pool skill for the full FF + formula option + ImpExecutionOptions + ViewDiff override wiring in Compute (PR #141610)
 - [InnerJoinToSemiJoin + pushdown viewdiff regression (GREAT-90)](great90-semijoin-pushdown-viewdiff-regression.md) -- RESOLVED by the Filter-barrier fix (PR #140868), confirmed in the 2026-09-17 re-run: 0 Lists blowups, correctness + failures clean, perf neutral with NO win; pushdown co-fires on 100% of Lists conversions and buys nothing measurable
+- [BlankAccessUnionSplit viewdiff 2026-09-21 (GREAT-90)](great90-blank-split-viewdiff-2026-09-21.md) -- BLOCKING: RemapColumns splices `_blank` at the wrong `__` boundary, 71 test-only crashes across 24 orgs, 0 on ref; correctness clean (whole-config rate mid-pack vs peer Tables configs); perf net negative but 8.9% of runs carry 98% of the download regression; failures must NEVER be split on the applied flag, it is empty when test fails
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
