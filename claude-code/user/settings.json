@@ -76,7 +76,7 @@
       "effortLevel": "high"
     },
     "claude-sonnet-5": {
-      "effortLevel": "xhigh"
+      "effortLevel": "medium"
     }
   },
   "autoUpdatesChannel": "latest",
