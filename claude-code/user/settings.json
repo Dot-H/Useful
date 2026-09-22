@@ -4,7 +4,7 @@
       "CronCreate"
     ]
   },
-  "model": "opus",
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -73,7 +73,7 @@
   "effortLevel": "medium",
   "modelSettings": {
     "claude-opus-5": {
-      "effortLevel": "high"
+      "effortLevel": "medium"
     },
     "claude-sonnet-5": {
       "effortLevel": "medium"
