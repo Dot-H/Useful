@@ -95,3 +95,4 @@
   cd ~/Useful && git add -A && git commit -m "update claude config" && git push
   ```
 - [Monitoring backlog stale rows -> warm errors](monitoring-backlog-stale-rows-warm-errors.md) -- 2026-09-23 warming alert: DetectOversizedTextCells served non-SQL datasets from an insert-only backlog after FF DatasetMonitoringServeFromBacklog flip
+- [DG cache dry-run slow avg = pod churn](dg-cache-dryrun-slow-avg-pod-churn.md) -- 2026-09-23: avg regression is ColdLoad misses on HPA-churned pods (Miss = 16% of resolutions, 98% of time); cache wins p50/p95 on stable pods; dashboard widget filters are asymmetric
