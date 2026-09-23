@@ -54,4 +54,12 @@ empty nullable set) and `SqlDatasetStatisticsRepository.ApplyHistogramsDelta` (2
 `DatasetStatisticsHistogramsJson` ctor drops the stored section). The extended-GUID feature flags are
 gone; the only gate left is the `MaxExtendedHistogramColumns` config knob (default 12).
 
+2026-09-23 stack review, write-amplification traps (unfixed at time of writing):
+- Scoped path: compute always sends a nullable delta for the synced column (zero buckets included); registry
+  rejects the WHOLE delta (PK + drift) if the stored nullable set lacks it -> direct job per changed sync.
+  Permanent for orgs with `MaxExtendedHistogramColumns = 0`, not behind the knob.
+- `DatasetMaintenanceBacklogJob` deletes the row BEFORE the job runs, and DO has no JobId dedup, so the backlog
+  only dedups for ~30s: a dataset still mismatching is re-dispatched every drain (cap 10/org/30s = 1200/h/org).
+- PR3 (#143130) alone fires a direct job on every sync whose synced column is stored class-B; needs PR5 with it.
+
 Related: [[great49-blank-access-view-wiring]], [[adding-compute-execution-option-skill]].
