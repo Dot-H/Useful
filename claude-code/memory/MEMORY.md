@@ -94,3 +94,4 @@
   ```
   cd ~/Useful && git add -A && git commit -m "update claude config" && git push
   ```
+- [Monitoring backlog stale rows -> warm errors](monitoring-backlog-stale-rows-warm-errors.md) -- 2026-09-23 warming alert: DetectOversizedTextCells served non-SQL datasets from an insert-only backlog after FF DatasetMonitoringServeFromBacklog flip
