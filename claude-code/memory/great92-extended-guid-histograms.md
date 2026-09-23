@@ -54,12 +54,13 @@ empty nullable set) and `SqlDatasetStatisticsRepository.ApplyHistogramsDelta` (2
 `DatasetStatisticsHistogramsJson` ctor drops the stored section). The extended-GUID feature flags are
 gone; the only gate left is the `MaxExtendedHistogramColumns` config knob (default 12).
 
-2026-09-23 stack review, write-amplification traps (unfixed at time of writing):
-- Scoped path: compute always sends a nullable delta for the synced column (zero buckets included); registry
-  rejects the WHOLE delta (PK + drift) if the stored nullable set lacks it -> direct job per changed sync.
-  Permanent for orgs with `MaxExtendedHistogramColumns = 0`, not behind the knob.
-- `DatasetMaintenanceBacklogJob` deletes the row BEFORE the job runs, and DO has no JobId dedup, so the backlog
-  only dedups for ~30s: a dataset still mismatching is re-dispatched every drain (cap 10/org/30s = 1200/h/org).
-- PR3 (#143130) alone fires a direct job on every sync whose synced column is stored class-B; needs PR5 with it.
+2026-09-23: stack is now 8 PRs, GitHub stack #143345; #143342 (FF `SyncExtendedGuidHistograms` 130144, formula
+option 269, `ImpExecutionOptions` field 68, D-RQC field) inserted below #143130. FF off = exact pre-stack
+behaviour: full write-back erases, a delta WITHOUT a nullable channel makes the registry drop the nullable
+section (legacy shape), workers track nothing. Fixed the same day: registry never rejects a delta over a class-B
+column (unknown column ignored, bad resolution dropped, buckets clamped at 0); coordinator only sends the synced
+column's delta when it is stored AND expected; the full write-back only writes the expected set (fixes the
+knob=0 ping-pong). Still OPEN: `DatasetMaintenanceBacklogJob` deletes the row BEFORE the job runs and DO has no
+JobId dedup, so the backlog only dedups for ~30s (cap 10/org/30s = 1200/h/org for a non-converging dataset).
 
 Related: [[great49-blank-access-view-wiring]], [[adding-compute-execution-option-skill]].
