@@ -52,6 +52,8 @@
 - [BlankAccessUnionSplit shared-CTE fallback (GREAT-90)](great90-blank-split-cte-fallback.md) -- draft PR #142770, structural ShouldUseSharedCte/IsPushdownFriendlyBase guard (not cardinality-based, estimator can't price a filter over a join); verified build+64+43+4 new tests pass; SNCF trace confirmed 160 vs 80 shards for identical rows
 - [Extended GUID histograms (GREAT-92)](great92-extended-guid-histograms.md) -- re-enabling class-B histograms; why #136632 was reverted (class-B cols absent from the sync LocalDataset) and why under-count, not over-count, is the dangerous direction (Min + RebalanceToSmallest only scales down)
 
+- [Multi-sort replica misselection](multisort-replica-misselection.md) -- slow UnionBoundedParallelismExec = selector picked a badly-pruning sort (independence assumption); estimates in compute-api `OrderedBySelectivity` log
+
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
 - If a worktree commit creates a "root-commit" with all files, use `git fetch origin <branch>` + `git reset --hard origin/<branch>` to recover.
