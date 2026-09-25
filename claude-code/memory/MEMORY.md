@@ -1,5 +1,6 @@
 # Memory
 
+- [Personal lowercase-branch git hook](personal-lowercase-branch-hook.md) — pre-commit script in ~/Useful, symlinked to monorepo .git/hooks/pre-commit, no global core.hooksPath (breaks git-lfs)
 - [Datadog widget JSON gotchas](dd-widget-json-schema-gotchas.md) — percentile aggs are pc50/pc95 not p50/p95, no definition wrapper in single-widget paste, DO service is dependency-orchestrator-api with resource_name tag
 - [FindManyFromOrganization (GREAT-77)](great77-view-repository-find-many.md) — batch view fetch, stacked master->#141192->#141152->#141116 via gh stack link
 - [Armset optimiser (GREAT-90)](project_armset_optimiser.md) — BlankAccessUnionSplitOptimizer, two-branch UNION ALL rewrite of access-rights filters; revived 2026-08-04 on lowercase branch rebased on outer-semi (old PR #131818 closed)

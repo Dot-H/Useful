@@ -1,0 +1,20 @@
+#!/bin/sh
+# Blocks committing on a branch name that contains uppercase letters.
+# Exempts branches that already exist on origin (case-preserved for open PRs
+# on legacy upper-case branches), checked locally against known remote refs
+# so this never needs the network.
+
+branch=$(git symbolic-ref --short HEAD 2>/dev/null) || exit 0
+
+case "$branch" in
+  *[A-Z]*)
+    if git rev-parse --verify --quiet "refs/remotes/origin/$branch" >/dev/null; then
+      exit 0
+    fi
+    echo "error: branch '$branch' contains uppercase letters." >&2
+    echo "New branches must be all lower case, e.g. username/jira-id/short-description." >&2
+    exit 1
+    ;;
+esac
+
+exit 0
