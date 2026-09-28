@@ -52,6 +52,7 @@
 - [BlankAccessUnionSplit shared-CTE fallback (GREAT-90)](great90-blank-split-cte-fallback.md) -- draft PR #142770, structural ShouldUseSharedCte/IsPushdownFriendlyBase guard (not cardinality-based, estimator can't price a filter over a join); verified build+64+43+4 new tests pass; SNCF trace confirmed 160 vs 80 shards for identical rows
 - [Extended GUID histograms (GREAT-92)](great92-extended-guid-histograms.md) -- re-enabling class-B histograms; why #136632 was reverted (class-B cols absent from the sync LocalDataset) and why under-count, not over-count, is the dangerous direction (Min + RebalanceToSmallest only scales down)
 
+- [UnionBoundedParallelismExec meaning](union-bounded-parallelism-exec-meaning.md) -- slow node = data-proxy stream wall incl. IMP back-pressure; most Graphite EU cases are client-bound (big results), not scans
 - [Multi-sort replica misselection](multisort-replica-misselection.md) -- slow UnionBoundedParallelismExec = selector picked a badly-pruning sort (independence assumption); estimates in compute-api `OrderedBySelectivity` log
 
 ## Git Worktrees
