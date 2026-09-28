@@ -105,3 +105,4 @@
   ```
 - [Monitoring backlog stale rows -> warm errors](monitoring-backlog-stale-rows-warm-errors.md) -- 2026-09-23 warming alert: DetectOversizedTextCells served non-SQL datasets from an insert-only backlog after FF DatasetMonitoringServeFromBacklog flip
 - [DG cache dry-run slow avg = pod churn](dg-cache-dryrun-slow-avg-pod-churn.md) -- 2026-09-23: avg regression is ColdLoad misses on HPA-churned pods (Miss = 16% of resolutions, 98% of time); cache wins p50/p95 on stable pods; dashboard widget filters are asymmetric
+- [Streamed aggregate decode cost](streamed-aggregate-decode-cost.md) -- slow high-group-count streamed Aggregate is Arrow row-cursor decode + Decimal128 BigInteger path, not aggregators; views IGNORE FF UseArrowDownloaderWithDictionaryEncoding (130143)
