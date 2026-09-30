@@ -55,13 +55,15 @@
 - [UnionBoundedParallelismExec meaning](union-bounded-parallelism-exec-meaning.md) -- slow node = data-proxy stream wall incl. IMP back-pressure; most Graphite EU cases are client-bound (big results), not scans
 - [Multi-sort replica misselection](multisort-replica-misselection.md) -- slow UnionBoundedParallelismExec = selector picked a badly-pruning sort (independence assumption); estimates in compute-api `OrderedBySelectivity` log
 
+- [PinnedKeysThroughJoins (GREAT-122)](great122-pinned-keys-through-joins.md) -- PinnedKeyReindexOptimizer sees pins below joins (FF 130144), stack #144632 -> #144633; remap allocate gain is an ESTIMATE until view-diffed
+
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
 - If a worktree commit creates a "root-commit" with all files, use `git fetch origin <branch>` + `git reset --hard origin/<branch>` to recover.
 - `git push -u origin <branch>` fails in worktrees; use `git push origin HEAD:<branch>` instead.
 
 ## Feature Flags
-- Scheduling team's FF range: 50000-50083 used (verified 2026-08-25), next available from 50084. The range is pitted with `reserved` gaps, so read the proto rather than assuming.
+- Scheduling team's FF range: 50000-50083 used (verified 2026-08-25), next available from 50084. Compute (compute_db) range 1301xx: 130144 taken by PinnedKeysThroughJoins (2026-09-30). The range is pitted with `reserved` gaps, so read the proto rather than assuming.
 - FFs defined in `apps/Common/Pigment.Api/FeatureFlags/FeatureFlags.proto`.
 - Pattern: `FeatureFlag_Name = ID [(flagMetadata) = {services: "service_name", defaultStatus: FeatureFlagStatus_Disabled}];`
 - Access via `IFeatureFlagLookup.IsFlagEnabled(FeatureFlag.Name)` or `IFeatureFlagService.IsFlagEnabled(FeatureFlag.Name, orgId)`.
