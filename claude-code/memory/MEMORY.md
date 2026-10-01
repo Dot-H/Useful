@@ -56,6 +56,7 @@
 - [Multi-sort replica misselection](multisort-replica-misselection.md) -- slow UnionBoundedParallelismExec = selector picked a badly-pruning sort (independence assumption); estimates in compute-api `OrderedBySelectivity` log
 
 - [PinnedKeysThroughJoins (GREAT-122)](great122-pinned-keys-through-joins.md) -- PinnedKeyReindexOptimizer sees pins below joins (FF 130144), stack #144632 -> #144633; remap allocate gain is an ESTIMATE until view-diffed
+- [Storage pushdown for huge-load aggregates](storage-pushdown-aggregate-to-data-proxy.md) -- ARM filters kept every group (no filter win); aggregate pushdown to data-proxy exists behind FF UseStoragePushdown 130069, ViewDiff override available
 
 ## Git Worktrees
 - Worktrees may lose branch history connection. After `git worktree add`, verify with `git log` that the branch has proper history before committing.
@@ -108,3 +109,4 @@
 - [Monitoring backlog stale rows -> warm errors](monitoring-backlog-stale-rows-warm-errors.md) -- 2026-09-23 warming alert: DetectOversizedTextCells served non-SQL datasets from an insert-only backlog after FF DatasetMonitoringServeFromBacklog flip
 - [DG cache dry-run slow avg = pod churn](dg-cache-dryrun-slow-avg-pod-churn.md) -- 2026-09-23: avg regression is ColdLoad misses on HPA-churned pods (Miss = 16% of resolutions, 98% of time); cache wins p50/p95 on stable pods; dashboard widget filters are asymmetric
 - [Streamed aggregate decode cost](streamed-aggregate-decode-cost.md) -- slow high-group-count streamed Aggregate is Arrow row-cursor decode + Decimal128 BigInteger path, not aggregators; views IGNORE FF UseArrowDownloaderWithDictionaryEncoding (130143)
+- [SideBindingToKeyBinding viewdiff (2026-10-01)](side-binding-to-key-binding-viewdiff-2026-10-01.md) -- works on view 0b89c9c6 via 16-shard partitioning (same 6.2M rows, split), NOT less data; the "no sharding / aggregations load more" trace was a different view (d480efb1) whose diff disabled sharding; shardingViable absent = planner never ran
