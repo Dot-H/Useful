@@ -56,6 +56,7 @@
 - [Multi-sort replica misselection](multisort-replica-misselection.md) -- slow UnionBoundedParallelismExec = selector picked a badly-pruning sort (independence assumption); estimates in compute-api `OrderedBySelectivity` log
 
 - [PinnedKeysThroughJoins (GREAT-122)](great122-pinned-keys-through-joins.md) -- PinnedKeyReindexOptimizer sees pins below joins (FF 130144), stack #144632 -> #144633; remap allocate gain is an ESTIMATE until view-diffed
+- [DRQC sequential sub-aggregation CTEs](drqc-sequential-subaggregation-ctes.md) -- 7 independent SubAggregation CTEs run one at a time (16.6 of 17.4 s); shard key _day last in sort -> 8 shards rescan the same pages; 2.8 s outlier = data-proxy admission queue
 - [Storage pushdown for huge-load aggregates](storage-pushdown-aggregate-to-data-proxy.md) -- ARM filters kept every group (no filter win); aggregate pushdown to data-proxy exists behind FF UseStoragePushdown 130069, ViewDiff override available
 
 ## Git Worktrees
