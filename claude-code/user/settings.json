@@ -67,6 +67,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "python3 /path/to/monorepo/tools/claude-code-status-line/status-line.py"
+  },
   "enabledPlugins": {
     "datadog@claude-plugins-official": true
   },
